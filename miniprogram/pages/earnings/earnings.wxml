@@ -1,0 +1,30 @@
+<view class="page">
+  <!-- 本周汇总 -->
+  <view class="summary-card">
+    <text class="summary-label">近7天收入</text>
+    <text class="summary-value">¥{{totalIncome}}</text>
+    <text class="summary-sub">{{totalTrips}} 单</text>
+  </view>
+
+  <!-- 每日柱状图 -->
+  <view class="chart-card" wx:if="{{!loading}}">
+    <text class="chart-title">每日明细</text>
+    <view class="chart">
+      <view class="bar-col" wx:for="{{daily}}" wx:key="date">
+        <view class="bar-wrapper">
+          <view class="bar" style="height: {{item.income > 0 ? (item.income / 300 * 260) + 'rpx' : '8rpx'}}">
+            <text class="bar-val" wx:if="{{item.income > 0}}">¥{{item.income}}</text>
+          </view>
+        </view>
+        <text class="bar-label">{{item.date.slice(5)}}</text>
+        <text class="bar-sub">{{item.trips}}单</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载 -->
+  <view class="loading" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text>加载中...</text>
+  </view>
+</view>

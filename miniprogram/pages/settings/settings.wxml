@@ -1,0 +1,14 @@
+<view class="page">
+  <view class="group">
+    <view class="group-title">存储</view>
+    <view class="cell" bindtap="clearCache">
+      <text class="cell-text">清理缓存</text>
+      <text class="cell-hint">{{cacheSize}}</text>
+      <text class="cell-arrow">›</text>
+    </view>
+    <view class="cell">
+      <text class="cell-text">存储占用</text>
+      <text class="cell-hint">{{storageInfo}}</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,95 @@
+/* pages/search/search.scss */
+page { background: #ffffff; height: 100vh; }
+.page { height: 100vh; display: flex; flex-direction: column; }
+
+/* ========== 搜索栏 ========== */
+.search-bar {
+  display: flex; align-items: center;
+  padding: 20rpx 24rpx; background: #fff; gap: 16rpx; flex-shrink: 0;
+}
+.search-box {
+  flex: 1; display: flex; align-items: center;
+  background: #ffffff; border-radius: 16rpx;
+  padding: 0 20rpx; height: 72rpx;
+}
+.search-icon { font-size: 32rpx; margin-right: 14rpx; }
+.search-input { flex: 1; font-size: 28rpx; color: #1a1a1a; }
+.clear-btn {
+  width: 36rpx; height: 36rpx; background: #c0c4cc; color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 20rpx; margin-left: 10rpx;
+}
+.cancel-btn { font-size: 28rpx; color: #2c2c2c; font-weight: 600; white-space: nowrap; }
+
+/* ========== 内容区 ========== */
+.content { flex: 1; overflow-y: auto; }
+.suggestions-list { flex: 1; overflow-y: auto; }
+
+/* ========== 分区 ========== */
+.section { padding: 20rpx 0; }
+.section-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 30rpx 12rpx;
+}
+.section-title {
+  font-size: 26rpx; color: #999; font-weight: 600;
+  padding: 12rpx 30rpx;
+}
+.section-action { font-size: 24rpx; color: #2c2c2c; }
+
+/* ========== POI 分类 ========== */
+.category-grid {
+  display: flex; flex-wrap: wrap; padding: 0 24rpx; gap: 16rpx;
+}
+.category-chip {
+  width: calc(33.33% - 12rpx);
+  background: #fff; border-radius: 14rpx;
+  padding: 22rpx 0; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 8rpx;
+}
+.category-chip:active { background: #f8f8f8; }
+.chip-icon { font-size: 36rpx; }
+.chip-text { font-size: 24rpx; color: #333; }
+
+/* ========== 地点列表 ========== */
+.place-item {
+  display: flex; align-items: center;
+  padding: 28rpx 30rpx; background: #fff;
+  border-bottom: 1rpx solid #f5f5f5; gap: 20rpx;
+}
+.place-item:active { background: #f8f8f8; }
+.place-icon {
+  font-size: 32rpx; width: 56rpx; height: 56rpx;
+  background: #ffffff; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.place-info { flex: 1; display: flex; flex-direction: column; gap: 6rpx; overflow: hidden; }
+.place-name {
+  font-size: 30rpx; color: #1a1a1a; font-weight: 500;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.place-addr {
+  font-size: 24rpx; color: #8c8c8c;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+
+/* ========== 搜索历史标签 ========== */
+.history-tags {
+  display: flex; flex-wrap: wrap; padding: 0 24rpx; gap: 12rpx;
+}
+.history-tag {
+  background: #fff; padding: 12rpx 22rpx; border-radius: 30rpx;
+  font-size: 26rpx; color: #555;
+  border: 1rpx solid #e8e8e8;
+}
+.history-tag:active { background: #f5f5f5; }
+
+/* ========== 加载/空状态 ========== */
+.loading-tip { text-align: center; padding: 60rpx; font-size: 26rpx; color: #8c8c8c; }
+.empty-tip {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 80rpx; gap: 20rpx;
+}
+.empty-icon { font-size: 80rpx; }
+.empty-text { font-size: 26rpx; color: #8c8c8c; }

@@ -1,0 +1,39 @@
+<view class="page">
+  <view class="route-bar">
+    <view class="route-item"><text class="dot start"></text><text>{{pickupAddr}}</text></view>
+    <view class="route-arrow">↓</view>
+    <view class="route-item"><text class="dot end"></text><text>{{destAddr}}</text></view>
+  </view>
+
+  <view class="list" wx:if="{{!loading}}">
+    <view class="card" wx:for="{{list}}" wx:key="id" bindtap="selectCarpool" data-item="{{item}}">
+      <view class="card-top">
+        <view class="driver-info">
+          <text class="driver-name">{{item.driverName}}</text>
+          <text class="car-info">{{item.carInfo}}</text>
+        </view>
+        <text class="price">{{item.priceText}}</text>
+      </view>
+      <view class="card-mid">
+        <text class="time">{{item.departTimeText}} 出发</text>
+        <text class="seats">剩余{{item.seats}}座</text>
+      </view>
+      <view class="card-route">
+        <text>沿途 {{item.pickupDist}}</text>
+        <text class="sep">·</text>
+        <text>终到 {{item.destDist}}</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{list.length === 0}}">
+      <text class="empty-icon">🚗</text>
+      <text class="empty-text">暂无顺风车行程</text>
+      <text class="empty-sub">附近暂无可匹配的顺风车</text>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <view class="spinner"></view>
+    <text>搜索顺风车中...</text>
+  </view>
+</view>

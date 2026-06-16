@@ -1,0 +1,58 @@
+<view class="page">
+  <!-- 路线条 -->
+  <view class="route-bar">
+    <view class="route-item"><view class="dot start"></view><text>{{pickupAddr}}</text></view>
+    <view class="route-arrow">↓</view>
+    <view class="route-item"><view class="dot end"></view><text>{{destAddr}}</text></view>
+  </view>
+
+  <!-- 匹配模式 -->
+  <block wx:if="{{mode === 'match'}}">
+    <view class="section-title" wx:if="{{!loading}}">可拼的行程 ({{matches.length}})</view>
+
+    <view class="list" wx:if="{{!loading}}">
+      <view class="card" wx:for="{{matches}}" wx:key="id" bindtap="joinShare" data-item="{{item}}">
+        <view class="card-top">
+          <view class="card-left">
+            <text class="name">{{item.passengerName}}</text>
+            <text class="order-no">{{item.orderNo}}</text>
+          </view>
+          <button class="join-btn">加入</button>
+        </view>
+        <view class="card-route">
+          <view class="loc"><text class="loc-dot s"></text><text>{{item.pickupAddr}}</text></view>
+          <view class="loc"><text class="loc-dot e"></text><text>{{item.destAddr}}</text></view>
+        </view>
+        <view class="card-meta">
+          <text>距你 {{item.pickupDist}}</text>
+          <text>·</text>
+          <text>终到 {{item.destDist}}</text>
+        </view>
+      </view>
+
+      <view class="empty" wx:if="{{matches.length === 0}}">
+        <text class="empty-icon">👥</text>
+        <text class="empty-text">暂无同路行程</text>
+        <text class="empty-sub">暂时没有匹配的拼车单</text>
+        <button class="create-btn" bindtap="createShare">发起拼车</button>
+      </view>
+    </view>
+
+    <view class="loading" wx:if="{{loading}}">
+      <view class="spinner"></view>
+      <text>搜索拼车中...</text>
+    </view>
+  </block>
+
+  <!-- 等待模式 -->
+  <block wx:if="{{mode === 'waiting'}}">
+    <view class="wait-card">
+      <view class="wait-anim">
+        <text class="wait-icon">🔍</text>
+      </view>
+      <text class="wait-title">正在匹配同路乘客</text>
+      <text class="wait-desc">已等待 {{waitSeconds}} 秒</text>
+      <text class="wait-sub">有同路乘客时将自动匹配</text>
+    </view>
+  </block>
+</view>

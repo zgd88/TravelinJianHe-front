@@ -1,0 +1,138 @@
+<view class="page">
+  <!-- 认证状态横幅 -->
+  <view wx:if="{{verifyStatus === 'loading'}}" class="verify-banner verify-loading"><text>检查认证状态中...</text></view>
+  <view wx:elif="{{verifyStatus === 'none'}}" class="verify-banner verify-warning" bindtap="goVerify"><text>⚠️ 您还未进行司机资质认证，点击去认证</text></view>
+  <view wx:elif="{{verifyStatus === 'pending'}}" class="verify-banner verify-pending" bindtap="goVerify"><text>⏳ 资质审核中，请耐心等待</text></view>
+  <view wx:elif="{{verifyStatus === 'rejected'}}" class="verify-banner verify-error" bindtap="goVerify"><text>❌ 认证未通过：{{rejectReason}}，点击重新提交</text></view>
+
+  <!-- 头部统计 -->
+  <view class="header" wx:if="{{verifyStatus === 'approved'}}">
+    <view class="header-top">
+      <view class="header-left">
+        <text class="header-title">司机首页</text>
+        <text class="header-rating" wx:if="{{ratingCount > 0}}">★ {{avgRating}}</text>
+        <text class="carpool-entry" bindtap="goCarpoolPublish">发布顺风车</text>
+        <view class="online-toggle {{isOnline ? 'on' : 'off'}}" bindtap="toggleOnline">
+          <view class="toggle-dot"></view>
+          <text>{{isOnline ? '在线接单' : '已下线'}}</text>
+        </view>
+      </view>
+      <view class="header-stats" bindtap="goEarnings">
+        <view class="stat">
+          <text class="stat-value">¥{{todayIncome}}</text>
+          <text class="stat-label">今日收入 ›</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat">
+          <text class="stat-value">{{todayTrips}}</text>
+          <text class="stat-label">今日单数</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 认证通过内容 -->
+  <block wx:if="{{verifyStatus === 'approved'}}">
+    <!-- Tab 切换 -->
+    <view class="tab-bar">
+      <view class="tab-item {{activeTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">
+        <text>附近订单</text>
+        <view wx:if="{{orders.length > 0}}" class="tab-badge">{{orders.length}}</view>
+      </view>
+      <view class="tab-item {{activeTab === 'mine' ? 'active' : ''}}" bindtap="switchTab" data-tab="mine">
+        <text>我的订单</text>
+        <view wx:if="{{myOrders.length > 0}}" class="tab-badge green">{{myOrders.length}}</view>
+      </view>
+      <view class="tab-item {{activeTab === 'carpool' ? 'active' : ''}}" bindtap="switchTab" data-tab="carpool">
+        <text>顺风车</text>
+        <view wx:if="{{carpoolOrders.length > 0}}" class="tab-badge yellow">{{carpoolOrders.length}}</view>
+      </view>
+    </view>
+
+    <!-- 附近待接订单 -->
+    <view wx:if="{{activeTab === 'pending'}}">
+      <view class="order-list" wx:if="{{orders.length > 0}}">
+        <view class="order-card" wx:for="{{orders}}" wx:key="id">
+          <view class="card-top" bindtap="acceptOrder" data-id="{{item.id}}">
+            <view class="card-left">
+              <text class="price">¥{{item.price}}</text>
+              <text class="distance">{{item.distance}}km</text>
+            </view>
+            <button class="accept-btn">抢单</button>
+          </view>
+          <view class="route">
+            <view class="route-item"><text class="dot pickup"></text><text class="addr">{{item.pickup}}</text></view>
+            <view class="route-item"><text class="dot dest"></text><text class="addr">{{item.dest}}</text></view>
+          </view>
+        </view>
+      </view>
+      <view class="empty" wx:else>
+        <text class="empty-icon">🔔</text>
+        <text class="empty-text">暂无附近订单</text>
+        <text class="empty-sub">等待乘客下单中...</text>
+      </view>
+    </view>
+
+    <!-- 我的订单 -->
+    <view wx:if="{{activeTab === 'mine'}}">
+      <!-- 筛选标签 -->
+      <view class="filter-row" wx:if="{{myOrders.length > 0}}">
+        <view class="filter-chip {{myFilter === 'all' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="all">全部</view>
+        <view class="filter-chip {{myFilter === 'accepted' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="accepted">已接单</view>
+        <view class="filter-chip {{myFilter === 'running' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="running">行程中</view>
+        <view class="filter-chip {{myFilter === 'completed' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="completed">已完成</view>
+      </view>
+      <view class="order-list" wx:if="{{filteredMyOrders.length > 0}}">
+        <view class="order-card" wx:for="{{filteredMyOrders}}" wx:key="id" bindtap="goMyOrder" data-id="{{item.id}}">
+          <view class="card-top">
+            <text class="order-status {{item.status}}">{{item.statusText}}</text>
+            <text class="order-no">{{item.order_no}}</text>
+          </view>
+          <view class="route">
+            <view class="route-item"><text class="dot pickup"></text><text class="addr">{{item.pickup_addr || '上车点'}}</text></view>
+            <view class="route-item"><text class="dot dest"></text><text class="addr">{{item.dest_addr || '目的地'}}</text></view>
+          </view>
+          <view class="card-bottom" wx:if="{{item.price > 0}}">
+            <text class="card-price">¥{{item.price}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty" wx:if="{{filteredMyOrders.length === 0}}">
+        <text class="empty-icon">📋</text>
+        <text class="empty-text">{{myFilter === 'all' ? '暂无订单' : '暂无该状态订单'}}</text>
+      </view>
+    </view>
+
+    <!-- 顺风车 -->
+    <view wx:if="{{activeTab === 'carpool'}}">
+      <view class="order-list" wx:if="{{carpoolOrders.length > 0}}">
+        <view class="order-card" wx:for="{{carpoolOrders}}" wx:key="id">
+          <view class="card-top">
+            <text class="order-status carpool-status">{{item.statusText}}</text>
+            <text class="order-no">{{item.departTime}} 出发</text>
+          </view>
+          <view class="route">
+            <view class="route-item"><text class="dot pickup"></text><text class="addr">{{item.pickupAddr}}</text></view>
+            <view class="route-item"><text class="dot dest"></text><text class="addr">{{item.destAddr}}</text></view>
+          </view>
+          <view class="card-bottom" wx:if="{{item.price > 0}}">
+            <text class="card-price">¥{{item.price}}/人 · {{item.seats}}座</text>
+          </view>
+        </view>
+      </view>
+      <view class="empty" wx:else>
+        <text class="empty-icon">🚗</text>
+        <text class="empty-text">暂无顺风车行程</text>
+        <text class="empty-sub" bindtap="goCarpoolPublish">发布一个顺风车 ›</text>
+      </view>
+    </view>
+  </block>
+
+  <!-- 未认证遮罩 -->
+  <view class="verify-overlay" wx:if="{{verifyStatus !== 'approved' && verifyStatus !== 'loading'}}">
+    <text class="verify-overlay-icon">🪪</text>
+    <text class="verify-overlay-text">完成司机资质认证后方可接单</text>
+    <button class="verify-overlay-btn" bindtap="goVerify">去认证</button>
+  </view>
+
+</view>

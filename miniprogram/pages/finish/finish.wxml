@@ -1,0 +1,88 @@
+<!--pages/finish/finish.wxml-->
+<view class="page">
+
+  <!-- 加载中 -->
+  <view class="loading-mask" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载行程数据...</text>
+  </view>
+
+  <!-- 行程轨迹地图 -->
+  <view class="map-area" wx:if="{{!loading}}">
+    <map
+      id="finishMap"
+      class="route-map"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      scale="{{scale}}"
+      markers="{{markers}}"
+      polyline="{{polyline}}"
+      enable-scroll="{{false}}"
+      enable-zoom="{{false}}"
+    >
+    </map>
+  </view>
+
+  <!-- 完成状态 -->
+  <view class="finish-status">
+    <text class="finish-emoji">🎉</text>
+    <text class="finish-title">行程结束</text>
+    <text class="finish-subtitle">感谢使用剑河出行</text>
+  </view>
+
+  <!-- 司机信息 -->
+  <view class="driver-card" wx:if="{{!loading}}">
+    <view class="driver-avatar">
+      <text class="avatar-emoji">👨‍✈️</text>
+    </view>
+    <view class="driver-info">
+      <text class="driver-name">{{driverName}}</text>
+      <text class="car-desc">{{carColor}} {{carModel}} {{carPlate}}</text>
+    </view>
+  </view>
+
+  <!-- 费用卡片 -->
+  <view class="price-card">
+    <text class="price-label">本次费用</text>
+    <view class="price-row">
+      <text class="price-symbol">¥</text>
+      <text class="price-value">{{totalPrice}}</text>
+    </view>
+    <view class="price-detail">
+      <view class="detail-row">
+        <text class="detail-label">行驶里程</text>
+        <text class="detail-value">{{distance}} km</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 评价区 -->
+  <view class="rating-section" wx:if="{{!ratingSubmitted}}">
+    <text class="rating-title">为司机打分</text>
+    <view class="stars-row">
+      <text
+        wx:for="{{[1,2,3,4,5]}}"
+        wx:key="*this"
+        class="star {{index < rating ? 'star-active' : ''}}"
+        data-rating="{{item}}"
+        bindtap="setRating"
+      >★</text>
+    </view>
+    <button class="rating-btn" bindtap="submitRating">提交评价</button>
+  </view>
+
+  <!-- 已评价 -->
+  <view class="rating-section" wx:else>
+    <text class="rating-title">已评价</text>
+    <view class="stars-row">
+      <text wx:for="{{[1,2,3,4,5]}}" wx:key="*this" class="star star-active">★</text>
+    </view>
+    <text class="rated-hint">感谢您的反馈！</text>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions">
+    <button class="btn-primary" bindtap="goHome">返回首页</button>
+  </view>
+
+</view>

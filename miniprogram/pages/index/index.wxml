@@ -1,0 +1,57 @@
+<!--pages/index/index.wxml-->
+<view class="page">
+  <map id="map" class="map"
+    latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}"
+    markers="{{markers}}" polyline="{{polyline}}"
+    show-location="{{true}}"
+    bindregionchange="onMapRegionChange"
+    bindmarkertap="onMarkerTap">
+    <cover-view class="map-center-pin">
+      <cover-view class="pin-icon">▼</cover-view>
+      <cover-view class="pin-shadow">●</cover-view>
+    </cover-view>
+  </map>
+
+  <!-- 返回（选好目的地后显示） -->
+  <view class="back-float" wx:if="{{destination}}" bindtap="backToRoute">
+    <text>‹</text>
+  </view>
+
+  <view class="zoom-controls">
+    <view class="zoom-btn" bindtap="zoomIn"><text class="zoom-icon">+</text></view>
+    <view class="zoom-btn" bindtap="zoomOut"><text class="zoom-icon">−</text></view>
+    <view class="zoom-btn locate-btn" bindtap="locateUser"><text class="zoom-icon">⊙</text></view>
+  </view>
+
+  <!-- 底部面板 -->
+  <view class="bottom-panel">
+    <!-- 出发点 -->
+    <view class="location-row" bindtap="goPickupSearch">
+      <view class="dot green-dot"></view>
+      <text class="location-text">{{pickupAddr}}</text>
+      <text class="row-arrow">›</text>
+    </view>
+    <!-- 目的地 -->
+    <view class="location-row dest-row" bindtap="goRoutePlan">
+      <view class="dot orange-dot"></view>
+      <text class="location-text placeholder" wx:if="{{!destination}}">你要去哪儿？</text>
+      <text class="location-text" wx:else>{{destination}}</text>
+      <text class="row-arrow">›</text>
+    </view>
+    <!-- 预估 -->
+    <view class="estimate-row" wx:if="{{estimateDistance}}">
+      <text class="estimate-badge">约 {{estimateDistance}}km</text>
+    </view>
+    <!-- 三个模式按钮 -->
+    <view class="mode-btns" wx:if="{{destination}}">
+      <button class="mode-btn carpool-btn" bindtap="goCarpool">🚗<text class="btn-label">顺风车</text></button>
+      <button class="mode-btn share-btn" bindtap="goShare">👥<text class="btn-label">拼车</text></button>
+      <button class="mode-btn solo-btn" bindtap="handleCallCar" loading="{{calling}}">
+        🚕<text class="btn-label">{{calling ? '呼叫中' : '单独叫车'}}</text>
+      </button>
+    </view>
+    <button class="call-btn" wx:else bindtap="handleCallCar" disabled="{{!destination || calling}}" loading="{{calling}}">
+      {{calling ? '正在呼叫...' : '请先选择目的地'}}
+    </button>
+  </view>
+</view>

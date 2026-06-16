@@ -1,0 +1,101 @@
+<!--pages/search/search.wxml-->
+<view class="page">
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-box">
+      <text class="search-icon">🔍</text>
+      <input
+        class="search-input"
+        placeholder="搜索地址、地名、地标"
+        value="{{keyword}}"
+        bindinput="onSearchInput"
+        focus="{{true}}"
+        confirm-type="search"
+        bindconfirm="onSearchConfirm"
+      />
+      <text class="clear-btn" wx:if="{{keyword}}" bindtap="clearKeyword">✕</text>
+    </view>
+    <text class="cancel-btn" bindtap="goBack">取消</text>
+  </view>
+
+  <!-- ========== 搜索建议（输入时显示） ========== -->
+  <view class="suggestions-list" wx:if="{{keyword && !showHistory}}">
+    <view class="loading-tip" wx:if="{{loading}}">
+      <text>正在搜索...</text>
+    </view>
+    <view class="place-item"
+      wx:for="{{suggestions}}"
+      wx:key="id"
+      bindtap="selectPlace"
+      data-item="{{item}}"
+    >
+      <text class="place-icon">📍</text>
+      <view class="place-info">
+        <text class="place-name">{{item.title}}</text>
+        <text class="place-addr">{{item.address}}</text>
+      </view>
+    </view>
+    <view class="empty-tip" wx:if="{{!loading && suggestions.length === 0}}">
+      <text class="empty-icon">🔍</text>
+      <text class="empty-text">未找到相关地点</text>
+    </view>
+  </view>
+
+  <!-- ========== 初始页（未搜索时显示） ========== -->
+  <view class="content" wx:if="{{showHistory}}">
+
+    <!-- POI 分类 -->
+    <view class="section">
+      <text class="section-title">周边分类</text>
+      <view class="category-grid">
+        <view class="category-chip" wx:for="{{categories}}" wx:key="key" bindtap="searchCategory" data-keyword="{{item.keyword}}">
+          <text class="chip-icon">{{item.icon}}</text>
+          <text class="chip-text">{{item.key}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 历史目的地 -->
+    <view class="section" wx:if="{{historyPlaces.length > 0}}">
+      <text class="section-title">常用目的地</text>
+      <view class="place-item" wx:for="{{historyPlaces}}" wx:key="name" bindtap="selectPlace" data-item="{{item}}">
+        <text class="place-icon">📌</text>
+        <view class="place-info">
+          <text class="place-name">{{item.name}}</text>
+          <text class="place-addr">{{item.address}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 收藏地址 -->
+    <view class="section" wx:if="{{savedPlaces.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">收藏地址</text>
+        <text class="section-action" bindtap="goSaved">管理</text>
+      </view>
+      <view class="place-item" wx:for="{{savedPlaces}}" wx:key="id" bindtap="selectPlace" data-item="{{item}}">
+        <text class="place-icon">{{item.label === '家' ? '🏠' : item.label === '公司' ? '🏢' : item.label === '学校' ? '🏫' : '📍'}}</text>
+        <view class="place-info">
+          <text class="place-name">{{item.label}}</text>
+          <text class="place-addr">{{item.address}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 搜索历史 -->
+    <view class="section" wx:if="{{searchHistory.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">搜索历史</text>
+        <text class="section-action" bindtap="clearHistory">清除</text>
+      </view>
+      <view class="history-tags">
+        <view class="history-tag" wx:for="{{searchHistory}}" wx:key="*this" bindtap="tapHistory" data-kw="{{item}}">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+</view>

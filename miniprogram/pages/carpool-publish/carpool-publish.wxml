@@ -1,0 +1,57 @@
+<view class="page">
+  <view class="form-card">
+    <text class="form-title">发布顺风车</text>
+
+    <view class="error-bar" wx:if="{{errorMsg}}"><text>{{errorMsg}}</text></view>
+
+    <!-- 出发地 -->
+    <view class="input-group">
+      <text class="input-label">出发地</text>
+      <view class="picker-row" bindtap="goPickupSearch">
+        <text class="{{pickupAddr ? '' : 'placeholder'}}">{{pickupAddr || '请选择出发地'}}</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 目的地 -->
+    <view class="input-group">
+      <text class="input-label">目的地</text>
+      <view class="picker-row" bindtap="goDestSearch">
+        <text class="{{destAddr ? '' : 'placeholder'}}">{{destAddr || '请选择目的地'}}</text>
+        <text class="arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 可坐人数 -->
+    <view class="input-group">
+      <text class="input-label">可坐人数</text>
+      <input class="input-field" type="number" value="{{seats}}" bindinput="onSeatsInput"/>
+    </view>
+
+    <!-- 发车日期 -->
+    <view class="input-row">
+      <view class="input-group half">
+        <text class="input-label">发车日期</text>
+        <picker mode="date" value="{{departDate}}" bindchange="onDateChange">
+          <view class="picker-row"><text>{{departDate || '选择日期'}}</text></view>
+        </picker>
+      </view>
+      <view class="input-group half">
+        <text class="input-label">发车时间</text>
+        <picker mode="time" value="{{departTime}}" bindchange="onTimeChange">
+          <view class="picker-row"><text>{{departTime || '选择时间'}}</text></view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 价格 -->
+    <view class="input-group">
+      <text class="input-label">每人价格（0为免费）</text>
+      <input class="input-field" type="digit" value="{{price}}" bindinput="onPriceInput" placeholder="0"/>
+    </view>
+
+    <button class="submit-btn" bindtap="submit" loading="{{submitting}}" disabled="{{submitting}}">
+      发布行程
+    </button>
+  </view>
+</view>

@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="group">
+    <view class="group-title">帮助</view>
+    <view class="cell" bindtap="goFAQ">
+      <text class="cell-text">常见问题</text>
+      <text class="cell-arrow">›</text>
+    </view>
+    <view class="cell" bindtap="goFeedback">
+      <text class="cell-text">意见反馈</text>
+      <text class="cell-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="group">
+    <view class="group-title">关于</view>
+    <view class="cell" bindtap="goAbout">
+      <text class="cell-text">关于我们</text>
+      <text class="cell-hint">v{{version}}</text>
+      <text class="cell-arrow">›</text>
+    </view>
+  </view>
+</view>

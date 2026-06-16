@@ -1,0 +1,76 @@
+<!--pages/order/order.wxml-->
+<view class="page">
+  
+  <!-- ========== 顶部地图缩略图 ========== -->
+  <view class="map-preview">
+    <view class="map-placeholder">
+      <text class="map-emoji">🗺️</text>
+      <text class="map-tip">路线规划中...</text>
+    </view>
+  </view>
+
+  <!-- ========== 状态区域 ========== -->
+  <view class="status-section">
+    <!-- 等待接单动画 -->
+    <view class="loading-animation" wx:if="{{orderStatus === 'waiting'}}">
+      <view class="pulse-ring"></view>
+      <view class="pulse-ring ring-2"></view>
+      <view class="pulse-ring ring-3"></view>
+      <view class="car-icon">🚗</view>
+    </view>
+
+    <!-- 已接单图标 -->
+    <view class="success-icon" wx:if="{{orderStatus === 'accepted'}}">
+      <text class="check-emoji">✅</text>
+    </view>
+
+    <text class="status-title">{{statusTitle}}</text>
+    <text class="status-desc">{{statusDesc}}</text>
+  </view>
+
+  <!-- ========== 订单信息卡片 ========== -->
+  <view class="order-card">
+    <!-- 上车点 -->
+    <view class="route-line">
+      <view class="route-dot start-dot"></view>
+      <view class="route-dash"></view>
+      <view class="route-dot end-dot"></view>
+    </view>
+
+    <view class="route-info">
+      <view class="route-row">
+        <text class="route-label">上</text>
+        <text class="route-text">当前位置</text>
+      </view>
+      <view class="route-row">
+        <text class="route-label">下</text>
+        <text class="route-text">{{destination}}</text>
+      </view>
+    </view>
+
+    <!-- 预估信息 -->
+    <view class="estimate-row">
+      <view class="estimate-item">
+        <text class="estimate-label">预估价格</text>
+        <text class="estimate-value">¥{{estimatePrice}}</text>
+      </view>
+      <view class="estimate-item">
+        <text class="estimate-label">预估时间</text>
+        <text class="estimate-value">{{estimateTime}}分钟</text>
+      </view>
+      <view class="estimate-item">
+        <text class="estimate-label">预估距离</text>
+        <text class="estimate-value">{{estimateDistance}}km</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 底部按钮 ========== -->
+  <view class="bottom-actions">
+    <button class="cancel-btn" bindtap="cancelOrder">取消订单</button>
+    
+    <!-- 模拟：手动切换状态（开发用，正式上线删除） -->
+    <button class="simulate-btn" bindtap="simulateAccept">模拟接单</button>
+  </view>
+
+</view>

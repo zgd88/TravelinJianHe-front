@@ -1,0 +1,53 @@
+<view class="page">
+  <view class="back-btn" bindtap="goBack"><text>‹</text></view>
+  <map id="routeMap" class="map"
+    latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}"
+    markers="{{markers}}" polyline="{{polylines}}" show-location="{{true}}"
+    enable-scroll="{{false}}" enable-zoom="{{false}}">
+  </map>
+
+  <!-- 加载 -->
+  <view class="loading-overlay" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text>规划路线中...</text>
+  </view>
+
+  <!-- 错误 -->
+  <view class="error-bar" wx:if="{{errorMsg}}">
+    <text>{{errorMsg}}</text>
+  </view>
+
+  <!-- 底部面板 -->
+  <view class="bottom-panel">
+    <view class="route-summary">
+      <view class="summary-row">
+        <view class="dot start"></view>
+        <text class="summary-text">{{pickupAddr || '出发点'}}</text>
+      </view>
+      <view class="summary-line"></view>
+      <view class="summary-row" bindtap="goSearchDest">
+        <view class="dot end"></view>
+        <text class="summary-text {{destAddr ? '' : 'placeholder'}}">{{destAddr || '请选择目的地'}}</text>
+        <text class="summary-arrow">›</text>
+      </view>
+    </view>
+
+    <!-- 路线列表 -->
+    <scroll-view class="route-list" wx:if="{{routes.length > 0}}" scroll-y>
+      <view class="route-item {{selectedIndex === index ? 'selected' : ''}}"
+        wx:for="{{routes}}" wx:key="*this"
+        bindtap="selectRoute" data-index="{{index}}">
+        <text class="route-tag {{selectedIndex === index ? 'active' : ''}}">{{selectedIndex === index ? '推荐' : '路线' + (index + 1)}}</text>
+        <view class="route-info">
+          <text class="route-time">{{item.timeText}}</text>
+          <text class="route-dist">{{item.distText}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <!-- 确认 -->
+    <button class="confirm-btn" wx:if="{{routes.length > 0}}" bindtap="confirmRoute">
+      选择此路线
+    </button>
+  </view>
+</view>

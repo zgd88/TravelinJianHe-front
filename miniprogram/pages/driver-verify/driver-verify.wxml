@@ -1,0 +1,134 @@
+<!--pages/driver-verify/driver-verify.wxml-->
+<view class="page">
+
+  <!-- 加载中 -->
+  <view class="loading-mask" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载认证信息...</text>
+  </view>
+
+  <!-- ========== 审核中状态 ========== -->
+  <block wx:if="{{verifyStatus === 'pending'}}">
+    <view class="status-banner pending">
+      <text class="status-banner-icon">⏳</text>
+      <text class="status-banner-title">认证审核中</text>
+      <text class="status-banner-desc">您的资质资料已提交，正在审核中，请耐心等待</text>
+    </view>
+
+    <view class="info-card" wx:if="{{submittedData}}">
+      <view class="info-title">已提交的资料</view>
+      <view class="info-row"><text class="info-label">姓名</text><text class="info-value">{{submittedData.real_name}}</text></view>
+      <view class="info-row"><text class="info-label">身份证</text><text class="info-value">{{submittedData.id_card}}</text></view>
+      <view class="info-row"><text class="info-label">驾驶证</text><text class="info-value">{{submittedData.driver_license}}</text></view>
+      <view class="info-row"><text class="info-label">车牌号</text><text class="info-value">{{submittedData.vehicle_plate}}</text></view>
+      <view class="info-row"><text class="info-label">车型</text><text class="info-value">{{submittedData.vehicle_model}}</text></view>
+      <view class="info-row"><text class="info-label">颜色</text><text class="info-value">{{submittedData.vehicle_color}}</text></view>
+      <view class="info-photos" wx:if="{{submittedData.id_card_photo || submittedData.driver_license_photo}}">
+        <image wx:if="{{submittedData.id_card_photo}}" src="{{submittedData.id_card_photo}}" mode="aspectFill" class="info-photo"></image>
+        <image wx:if="{{submittedData.driver_license_photo}}" src="{{submittedData.driver_license_photo}}" mode="aspectFill" class="info-photo"></image>
+      </view>
+    </view>
+
+    <view class="btn-area">
+      <button class="back-btn" bindtap="goBack">返回</button>
+    </view>
+  </block>
+
+  <!-- ========== 已通过状态 ========== -->
+  <block wx:if="{{verifyStatus === 'approved'}}">
+    <view class="success-card">
+      <text class="success-icon">✅</text>
+      <text class="success-title">已通过实名认证</text>
+      <text class="success-desc">您现在可以接单了</text>
+      <button class="action-btn primary" bindtap="goHome">开始接单</button>
+    </view>
+  </block>
+
+  <!-- ========== 认证表单 ========== -->
+  <block wx:if="{{showForm}}">
+
+    <!-- 驳回横幅 -->
+    <view class="status-banner rejected" wx:if="{{verifyStatus === 'rejected'}}">
+      <text class="status-banner-icon">❌</text>
+      <text class="status-banner-title">认证未通过</text>
+      <text class="status-banner-desc">{{rejectReason}}</text>
+      <text class="status-banner-tip">请修改后重新提交</text>
+    </view>
+
+    <view class="form-container">
+
+      <!-- 错误提示 -->
+      <view class="error-bar" wx:if="{{errorMsg}}">
+        <text>{{errorMsg}}</text>
+      </view>
+
+      <!-- 个人信息 -->
+      <view class="section">
+        <text class="section-title">个人信息</text>
+        <view class="input-group">
+          <text class="input-label">真实姓名</text>
+          <input class="input-field" value="{{realName}}" bindinput="onRealNameInput" placeholder="请输入身份证姓名" maxlength="20"/>
+        </view>
+        <view class="input-group">
+          <text class="input-label">身份证号</text>
+          <input class="input-field" value="{{idCard}}" bindinput="onIdCardInput" placeholder="18位身份证号码" maxlength="18" type="idcard"/>
+        </view>
+        <view class="input-group">
+          <text class="input-label">驾驶证号</text>
+          <input class="input-field" value="{{driverLicense}}" bindinput="onDriverLicenseInput" placeholder="请输入驾驶证号" maxlength="50"/>
+        </view>
+      </view>
+
+      <!-- 车辆信息 -->
+      <view class="section">
+        <text class="section-title">车辆信息</text>
+        <view class="input-group">
+          <text class="input-label">车牌号</text>
+          <input class="input-field" value="{{vehiclePlate}}" bindinput="onVehiclePlateInput" placeholder="如：川A12345" maxlength="20"/>
+        </view>
+        <view class="input-group">
+          <text class="input-label">车辆型号</text>
+          <input class="input-field" value="{{vehicleModel}}" bindinput="onVehicleModelInput" placeholder="如：丰田卡罗拉 2023款" maxlength="50"/>
+        </view>
+        <view class="input-group">
+          <text class="input-label">车辆颜色</text>
+          <input class="input-field" value="{{vehicleColor}}" bindinput="onVehicleColorInput" placeholder="如：白色" maxlength="20"/>
+        </view>
+      </view>
+
+      <!-- 证件照片 -->
+      <view class="section">
+        <text class="section-title">证件照片</text>
+        <view class="upload-group">
+          <text class="upload-label">身份证（人像面）</text>
+          <view class="upload-box" bindtap="chooseIdCardPhoto">
+            <image wx:if="{{idCardPhoto}}" src="{{idCardPhoto}}" mode="aspectFill" class="upload-preview"></image>
+            <view wx:else class="upload-placeholder">
+              <text class="upload-icon">+</text>
+              <text class="upload-hint">点击上传</text>
+            </view>
+          </view>
+          <text class="upload-status" wx:if="{{uploadingIdCard}}">上传中...</text>
+        </view>
+        <view class="upload-group">
+          <text class="upload-label">驾驶证（正页）</text>
+          <view class="upload-box" bindtap="chooseDriverLicensePhoto">
+            <image wx:if="{{driverLicensePhoto}}" src="{{driverLicensePhoto}}" mode="aspectFill" class="upload-preview"></image>
+            <view wx:else class="upload-placeholder">
+              <text class="upload-icon">+</text>
+              <text class="upload-hint">点击上传</text>
+            </view>
+          </view>
+          <text class="upload-status" wx:if="{{uploadingLicense}}">上传中...</text>
+        </view>
+      </view>
+
+      <!-- 提交 -->
+      <button class="action-btn primary submit-btn" bindtap="handleSubmit" loading="{{submitting}}" disabled="{{submitting}}">
+        {{submitting ? '提交中...' : (verifyStatus === 'rejected' ? '重新提交认证' : '提交认证')}}
+      </button>
+    </view>
+
+  </block>
+
+</view>

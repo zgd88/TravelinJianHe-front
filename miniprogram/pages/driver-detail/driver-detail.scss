@@ -1,0 +1,193 @@
+/* pages/driver-detail/driver-detail.scss */
+page { background: #ffffff; height: 100vh; }
+.page { height: 100vh; display: flex; flex-direction: column; }
+
+/* ========== 加载中 ========== */
+.loading-mask {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: #ffffff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  z-index: 999;
+}
+.loading-spinner {
+  width: 60rpx; height: 60rpx;
+  border: 5rpx solid #e8e8e8;
+  border-top-color: #2c2c2c;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 26rpx; color: #999; margin-top: 20rpx; }
+
+/* ========== 地图区域 ========== */
+.map-area {
+  height: 480rpx;
+  flex-shrink: 0;
+  position: relative;
+}
+.map { width: 100%; height: 100%; }
+
+/* 导航悬浮按钮 */
+.nav-float-btn {
+  position: absolute; right: 20rpx; bottom: 20rpx;
+  background: #fff;
+  border-radius: 40rpx;
+  padding: 14rpx 22rpx;
+  display: flex; align-items: center;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.12);
+  z-index: 10;
+}
+.nav-float-btn:active { background: #f5f5f5; }
+.nav-icon { font-size: 28rpx; margin-right: 6rpx; }
+.nav-text { font-size: 24rpx; color: #333; font-weight: 600; }
+
+/* ========== 状态条 ========== */
+.status-bar {
+  padding: 16rpx 30rpx;
+  display: flex; align-items: center; justify-content: center;
+}
+.status-icon { font-size: 28rpx; margin-right: 10rpx; }
+.status-text { font-size: 26rpx; font-weight: 500; }
+
+/* ========== 路线卡片 ========== */
+.route-card {
+  background: #fff; margin: 0 20rpx 12rpx;
+  border-radius: 16rpx; padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.03);
+}
+.route-item { display: flex; align-items: flex-start; }
+.route-content { flex: 1; }
+.route-dot {
+  width: 16rpx; height: 16rpx; border-radius: 50%;
+  margin-right: 16rpx; margin-top: 6rpx; flex-shrink: 0;
+}
+.route-dot.pickup { background: #2c2c2c; box-shadow: 0 0 0 4rpx rgba(7,193,96,0.15); }
+.route-dot.dest { background: #2c2c2c; box-shadow: 0 0 0 4rpx rgba(255,107,0,0.15); }
+.route-label { font-size: 22rpx; color: #999; display: block; }
+.route-addr { font-size: 28rpx; color: #1a1a1a; font-weight: 500; display: block; margin-top: 2rpx; }
+.route-line {
+  width: 2rpx; height: 32rpx; background: #e0e0e0;
+  margin-left: 7rpx; margin: 8rpx 0 8rpx 7rpx;
+}
+.route-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 16rpx; padding-top: 16rpx;
+  border-top: 1rpx solid #f5f5f5;
+}
+.route-order-no { font-size: 22rpx; color: #bbb; }
+.route-distance { font-size: 22rpx; color: #2c2c2c; font-weight: 600; }
+
+/* ========== 乘客卡片 ========== */
+.passenger-card {
+  background: #fff; margin: 0 20rpx 12rpx;
+  border-radius: 16rpx; padding: 20rpx 24rpx;
+  display: flex; align-items: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.03);
+}
+.passenger-avatar {
+  width: 72rpx; height: 72rpx; background: #f5f5f5;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin-right: 16rpx; overflow: hidden;
+}
+.avatar-img { width: 100%; height: 100%; }
+.avatar-emoji { font-size: 40rpx; }
+.passenger-info { flex: 1; }
+.passenger-name { font-size: 30rpx; font-weight: 700; display: block; color: #1a1a1a; }
+.passenger-phone { font-size: 24rpx; color: #8c8c8c; margin-top: 4rpx; }
+.call-btn {
+  display: flex; align-items: center;
+  background: #f0f0f0; padding: 12rpx 22rpx; border-radius: 30rpx;
+}
+.call-btn:active { background: #c8e6c9; }
+.call-icon { font-size: 22rpx; }
+.call-text { font-size: 24rpx; color: #2c2c2c; margin-left: 6rpx; font-weight: 600; }
+
+/* ========== 费用卡片 ========== */
+.price-card {
+  background: #fff; margin: 0 20rpx;
+  border-radius: 16rpx; padding: 24rpx;
+  display: flex; align-items: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.03);
+}
+.price-item { flex: 1; text-align: center; }
+.price-divider { width: 1rpx; height: 50rpx; background: #f0f0f0; }
+.price-label { font-size: 24rpx; color: #8c8c8c; display: block; }
+.price-value { font-size: 36rpx; font-weight: 700; color: #2c2c2c; display: block; margin-top: 6rpx; }
+.price-value.sub { font-size: 28rpx; }
+
+/* ========== 已完成/取消占位卡片 ========== */
+.completed-card {
+  background: #fff; margin: 20rpx 20rpx;
+  border-radius: 16rpx; padding: 48rpx 24rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.03);
+}
+.completed-icon { font-size: 72rpx; display: block; margin-bottom: 16rpx; }
+.completed-text { font-size: 30rpx; font-weight: 600; color: #1a1a1a; display: block; }
+.completed-sub { font-size: 36rpx; font-weight: 700; color: #2c2c2c; display: block; margin-top: 16rpx; }
+
+/* ========== 操作按钮 ========== */
+.actions {
+  display: flex; gap: 14rpx; padding: 16rpx 20rpx;
+  margin-top: auto; padding-bottom: calc(env(safe-area-inset-bottom) + 16rpx);
+}
+.action-btn {
+  flex: 1; font-size: 28rpx; font-weight: 600; padding: 22rpx 0;
+  border-radius: 14rpx; border: none; color: #fff;
+}
+.action-btn::after { border: none; }
+.btn-arrive { background: #2c2c2c; }
+.btn-arrive:active { background: #444; }
+.btn-start { background: #2c2c2c; }
+.btn-start:active { background: #444; }
+.btn-complete { background: #ff4d4f; }
+.btn-complete:active { background: #e53935; }
+
+button[disabled] {
+  opacity: 0.35;
+}
+
+/* 聊天 */
+.chat-bubble {
+  position: absolute; right: 24rpx; top: 40%;
+  width: 88rpx; height: 88rpx; background: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.12); z-index: 500;
+}
+.bubble-icon { font-size: 40rpx; }
+.bubble-badge {
+  position: absolute; top: -4rpx; right: -4rpx;
+  background: #ff4d4f; color: #fff; font-size: 20rpx;
+  min-width: 32rpx; height: 32rpx; line-height: 32rpx; text-align: center;
+  border-radius: 16rpx; padding: 0 6rpx;
+}
+.chat-float {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: 55%; background: #fff; z-index: 600;
+  border-radius: 24rpx 24rpx 0 0; display: flex; flex-direction: column;
+}
+.chat-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 24rpx 30rpx 16rpx; border-bottom: 1rpx solid #f0f0f0;
+}
+.chat-title { font-size: 30rpx; font-weight: 700; }
+.chat-close { font-size: 30rpx; color: #999; padding: 10rpx; }
+.chat-body { flex: 1; padding: 16rpx 24rpx; overflow-y: auto; }
+.chat-msg { margin-bottom: 16rpx; max-width: 75%; }
+.chat-msg.me { margin-left: auto; text-align: right; }
+.chat-msg.me .msg-text { background: #2c2c2c; color: #fff; }
+.chat-msg.other .msg-text { background: #f0f0f0; color: #333; }
+.msg-text {
+  display: inline-block; padding: 14rpx 20rpx; border-radius: 16rpx;
+  font-size: 28rpx; word-break: break-all;
+}
+.msg-time { font-size: 20rpx; color: #bbb; display: block; margin-top: 4rpx; }
+.chat-footer {
+  display: flex; align-items: center; padding: 16rpx 24rpx;
+  border-top: 1rpx solid #f0f0f0; padding-bottom: calc(env(safe-area-inset-bottom) + 16rpx);
+}
+.chat-input {
+  flex: 1; background: #ffffff; border-radius: 30rpx;
+  padding: 16rpx 24rpx; font-size: 26rpx; margin-right: 12rpx;
+}
+.chat-send { font-size: 28rpx; color: #2c2c2c; font-weight: 600; padding: 10rpx; }

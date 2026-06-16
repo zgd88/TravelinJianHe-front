@@ -1,0 +1,143 @@
+<!--pages/driver-detail/driver-detail.wxml-->
+<view class="page">
+
+  <!-- 加载中 -->
+  <view class="loading-mask" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 地图区域 -->
+  <view class="map-area">
+    <map
+      id="driverMap"
+      class="map"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      scale="{{scale}}"
+      markers="{{markers}}"
+      polyline="{{polyline}}"
+      show-location="{{true}}"
+    >
+    </map>
+    <!-- 导航按钮（悬浮在地图上） -->
+    <view class="nav-float-btn" bindtap="navigateToPickup" wx:if="{{!loading && actionsVisible}}">
+      <text class="nav-icon">🧭</text>
+      <text class="nav-text">导航</text>
+    </view>
+  </view>
+
+  <!-- 状态提示条 -->
+  <view class="status-bar" style="background:{{statusColor}}15;color:{{statusColor}}">
+    <text class="status-icon">{{statusIcon}}</text>
+    <text class="status-text">{{statusText}}</text>
+  </view>
+
+  <!-- 路线信息卡片 -->
+  <view class="route-card" wx:if="{{!loading}}">
+    <view class="route-item">
+      <view class="route-dot pickup"></view>
+      <view class="route-content">
+        <text class="route-label">上车点</text>
+        <text class="route-addr">{{pickupAddr}}</text>
+      </view>
+    </view>
+    <view class="route-line"></view>
+    <view class="route-item">
+      <view class="route-dot dest"></view>
+      <view class="route-content">
+        <text class="route-label">目的地</text>
+        <text class="route-addr">{{destAddr}}</text>
+      </view>
+    </view>
+    <view class="route-footer" wx:if="{{estimatedDistance !== '--'}}">
+      <text class="route-order-no" wx:if="{{orderNo}}">订单号: {{orderNo}}</text>
+      <text class="route-distance">约 {{estimatedDistance}}</text>
+    </view>
+  </view>
+
+  <!-- 乘客信息 -->
+  <view class="passenger-card" wx:if="{{!loading}}">
+    <view class="passenger-avatar">
+      <image wx:if="{{passengerAvatar}}" class="avatar-img" src="{{passengerAvatar}}" mode="aspectFill"></image>
+      <text wx:else class="avatar-emoji">🧑</text>
+    </view>
+    <view class="passenger-info">
+      <text class="passenger-name">{{passengerName}}</text>
+      <text class="passenger-phone">{{passengerPhoneMasked}}</text>
+    </view>
+    <view class="call-btn" bindtap="callPassenger">
+      <text class="call-icon">📞</text>
+      <text class="call-text">联系</text>
+    </view>
+  </view>
+
+  <!-- 费用预估 -->
+  <view class="price-card" wx:if="{{!loading && actionsVisible}}">
+    <view class="price-item">
+      <text class="price-label">预估收入</text>
+      <text class="price-value">¥{{price || '--'}}</text>
+    </view>
+    <view class="price-divider"></view>
+    <view class="price-item">
+      <text class="price-label">预估里程</text>
+      <text class="price-value sub">{{estimatedDistance}}</text>
+    </view>
+  </view>
+
+  <!-- 已完成/取消状态占位 -->
+  <view class="completed-card" wx:if="{{!loading && !actionsVisible}}">
+    <text class="completed-icon">{{statusIcon}}</text>
+    <text class="completed-text">{{statusText}}</text>
+    <text class="completed-sub" wx:if="{{price > 0}}">本次收入 ¥{{price}}</text>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="actions" wx:if="{{!loading && actionsVisible}}">
+    <button
+      class="action-btn btn-arrive"
+      bindtap="arrivePickup"
+      disabled="{{!canArrive}}"
+    >到达上车点</button>
+
+    <button
+      class="action-btn btn-start"
+      bindtap="startTrip"
+      disabled="{{!canStart}}"
+    >开始行程</button>
+
+    <button
+      class="action-btn btn-complete"
+      bindtap="completeTrip"
+      disabled="{{!canComplete}}"
+    >完成行程</button>
+  </view>
+
+  <!-- 聊天气泡 -->
+  <view class="chat-bubble" wx:if="{{!showChat && messages.length >= 0}}" bindtap="toggleChat">
+    <text class="bubble-icon">💬</text>
+    <text class="bubble-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</text>
+  </view>
+
+  <!-- 聊天浮窗 -->
+  <view class="chat-float" wx:if="{{showChat && messages}}">
+    <view class="chat-header">
+      <text class="chat-title">与乘客聊天</text>
+      <text class="chat-close" bindtap="toggleChat">✕</text>
+    </view>
+    <scroll-view class="chat-body" scroll-y scroll-into-view="chat-bottom">
+      <block wx:if="{{messages.length > 0}}">
+        <view class="chat-msg {{item.from === 'driver' ? 'me' : 'other'}}" wx:for="{{messages}}" wx:key="*this">
+          <text class="msg-text">{{item.text}}</text>
+          <text class="msg-time">{{item.time}}</text>
+        </view>
+      </block>
+      <view id="chat-bottom"></view>
+    </scroll-view>
+    <view class="chat-footer">
+      <input class="chat-input" value="{{chatText}}" bindinput="onChatInput" confirm-type="send" bindconfirm="sendMessage" placeholder="输入消息..."/>
+      <text class="chat-send" bindtap="sendMessage">发送</text>
+    </view>
+  </view>
+
+</view>

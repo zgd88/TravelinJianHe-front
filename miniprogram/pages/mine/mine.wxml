@@ -1,0 +1,97 @@
+<!--pages/mine/mine.wxml-->
+<view class="page">
+
+  <!-- 用户信息卡片 -->
+  <view class="user-card">
+    <view class="avatar" bindtap="getUserAvatar">
+      <image wx:if="{{avatarUrl}}" class="avatar-img" src="{{avatarUrl}}" mode="aspectFill"></image>
+      <text wx:else class="avatar-emoji">🧑</text>
+    </view>
+    <view class="user-info">
+      <view class="nickname-row" bindtap="openNicknameModal">
+        <text class="nickname">{{nickname}}</text>
+        <text class="edit-icon">✎</text>
+      </view>
+      <text class="phone">{{maskedPhone || '未绑定手机号'}}</text>
+      <view class="role-badge">
+        <text class="role-badge-text">{{roleText}}</text>
+      </view>
+    </view>
+    <view class="role-switch" bindtap="switchRole">
+      <text class="switch-text">切换为{{role === 'driver' ? '乘客' : '司机'}}</text>
+    </view>
+  </view>
+
+  <!-- 统计栏 -->
+  <view class="stats-card">
+    <view class="stat-item" bindtap="goOrderList" data-filter="all">
+      <text class="stat-num">{{totalOrders}}</text>
+      <text class="stat-label">总订单 ›</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <text class="stat-num">¥{{totalAmount}}</text>
+      <text class="stat-label">{{role === 'driver' ? '总收入' : '总消费'}}</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item" bindtap="goOrderList" data-filter="completed">
+      <text class="stat-num">{{completedOrders}}</text>
+      <text class="stat-label">已完成 ›</text>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-card">
+    <!-- 收藏地址 -->
+    <view class="menu-item" bindtap="onMenuTap" data-key="saved_places">
+      <text class="menu-icon">📍</text>
+      <text class="menu-text">收藏地址</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <!-- 司机认证（仅司机角色显示） -->
+    <view class="menu-item" wx:if="{{role === 'driver'}}" bindtap="onMenuTap" data-key="verify">
+      <text class="menu-icon">🪪</text>
+      <text class="menu-text">司机认证
+        <text wx:if="{{verifyStatus === 'approved'}}" class="verify-tag approved">已认证</text>
+        <text wx:elif="{{verifyStatus === 'pending'}}" class="verify-tag pending">审核中</text>
+        <text wx:elif="{{verifyStatus === 'rejected'}}" class="verify-tag rejected">未通过</text>
+        <text wx:elif="{{verifyStatus === 'none'}}" class="verify-tag none">去认证</text>
+      </text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <!-- 管理员审核入口（仅司机可见） -->
+    <view class="menu-item" wx:if="{{role === 'driver'}}" bindtap="onMenuTap" data-key="admin_verify">
+      <text class="menu-icon">🔍</text>
+      <text class="menu-text">司机认证审核</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" wx:for="{{menus}}" wx:key="key" bindtap="onMenuTap" data-key="{{item.key}}">
+      <text class="menu-icon">{{item.icon}}</text>
+      <text class="menu-text">{{item.text}}</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-area">
+    <button class="logout-btn" bindtap="logout">退出登录</button>
+  </view>
+
+</view>
+
+<!-- ========== 昵称编辑弹窗 ========== -->
+<view class="modal-mask" wx:if="{{showNicknameModal}}" bindtap="closeNicknameModal">
+  <view class="modal-box" catchtap="noop">
+    <view class="modal-header">
+      <text class="modal-title">修改昵称</text>
+      <text class="modal-close" bindtap="closeNicknameModal">✕</text>
+    </view>
+    <view class="modal-body">
+      <input class="nickname-input" value="{{editingNickname}}" bindinput="onNicknameInput" maxlength="20" placeholder="请输入昵称" focus="{{true}}"/>
+    </view>
+    <view class="modal-footer">
+      <button class="modal-btn cancel" bindtap="closeNicknameModal">取消</button>
+      <button class="modal-btn confirm" bindtap="saveNickname">保存</button>
+    </view>
+  </view>
+</view>

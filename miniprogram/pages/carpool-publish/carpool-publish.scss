@@ -1,0 +1,33 @@
+page { background: #ffffff; }
+.page { padding: 24rpx; }
+
+.form-card { background: #fff; border-radius: 20rpx; padding: 36rpx 30rpx; }
+.form-title { font-size: 36rpx; font-weight: 700; color: #1a1a1a; display: block; text-align: center; margin-bottom: 24rpx; }
+
+.error-bar {
+  background: #fff2f0; border: 1rpx solid #ffccc7; border-radius: 10rpx;
+  padding: 14rpx 20rpx; margin-bottom: 20rpx; font-size: 24rpx; color: #ff4d4f;
+}
+
+.input-group { margin-bottom: 22rpx; }
+.input-row { display: flex; gap: 20rpx; }
+.half { flex: 1; }
+.input-label { font-size: 26rpx; color: #666; margin-bottom: 10rpx; display: block; }
+.input-field {
+  width: 100%; background: #f8f9fb; border: 2rpx solid #eaedf2;
+  border-radius: 12rpx; padding: 22rpx 20rpx; font-size: 28rpx; box-sizing: border-box;
+}
+.picker-row {
+  background: #f8f9fb; border: 2rpx solid #eaedf2; border-radius: 12rpx;
+  padding: 22rpx 20rpx; font-size: 28rpx; display: flex; justify-content: space-between; align-items: center;
+}
+.placeholder { color: #c0c4cc; }
+.arrow { font-size: 30rpx; color: #ccc; }
+
+.submit-btn {
+  width: 100%; background: linear-gradient(135deg, #2c2c2c, #444);
+  color: #fff; font-size: 32rpx; font-weight: 700; padding: 24rpx 0;
+  border-radius: 16rpx; border: none; margin-top: 20rpx;
+}
+.submit-btn::after { border: none; }
+.submit-btn:disabled { opacity: .6; }

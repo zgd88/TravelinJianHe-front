@@ -1,0 +1,12 @@
+page { background: #ffffff; }
+.page { padding-top: 20rpx; }
+.group { margin-bottom: 20rpx; }
+.group-title { font-size: 24rpx; color: #999; padding: 0 30rpx 12rpx; }
+.cell {
+  display: flex; align-items: center; background: #fff;
+  padding: 28rpx 30rpx; border-bottom: 1rpx solid #f5f5f5;
+}
+.cell:last-child { border-bottom: none; }
+.cell-text { font-size: 28rpx; color: #1a1a1a; flex: 1; }
+.cell-hint { font-size: 24rpx; color: #bbb; margin-right: 8rpx; }
+.cell-arrow { font-size: 28rpx; color: #ccc; }

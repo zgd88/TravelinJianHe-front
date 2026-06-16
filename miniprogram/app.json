@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/register/register",
+    "pages/reset-password/reset-password",
+    "pages/choose-role/choose-role",
+    "pages/index/index",
+    "pages/search/search",
+    "pages/route-plan/route-plan",
+    "pages/share-ride/share-ride",
+    "pages/carpool-list/carpool-list",
+    "pages/carpool-publish/carpool-publish",
+    "pages/order/order",
+    "pages/riding/riding",
+    "pages/finish/finish",
+    "pages/driver-home/driver-home",
+    "pages/driver-detail/driver-detail",
+    "pages/driver-verify/driver-verify",
+    "pages/admin-verify/admin-verify",
+    "pages/order-list/order-list",
+    "pages/wallet/wallet",
+    "pages/saved-places/saved-places",
+    "pages/earnings/earnings",
+    "pages/help/help",
+    "pages/settings/settings",
+    "pages/mine/mine",
+    "pages/logs/logs"
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#999",
+    "selectedColor": "#ff6b00",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/driver-home/driver-home", "text": "接单" },
+      { "pagePath": "pages/mine/mine", "text": "我的" }
+    ]
+  },
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationStyle": "default"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "requiredPrivateInfos": ["getLocation", "chooseLocation"],
+  "permission": {
+    "scope.userLocation": { "desc": "用于获取当前位置，以便为您提供打车服务" }
+  }
+}

@@ -1,0 +1,27 @@
+05/24 04:26:21
+travel-service-042
+       VALUES (3, 3, 'TC202605230C4584B9', '30.5591030', '103.9515750', '成都双流国际机场', '30.6304000', '104.1404000', '成都东站', 'pending', 'carpool', 15)
+05/24 04:26:21
+travel-service-042
+  sql: 'INSERT INTO orders (user_id, driver_id, order_no, pickup_lat, pickup_lng, pickup_addr, dest_lat, dest_lng, dest_addr, status, ride_type, carpool_order_id)\n' +
+05/24 04:26:21
+travel-service-042
+  sqlMessage: "Unknown column 'carpool_order_id' in 'field list'",
+05/24 04:26:21
+travel-service-042
+  sqlState: '42S22',
+05/24 04:26:21
+travel-service-042
+  errno: 1054,
+05/24 04:26:21
+travel-service-042
+  code: 'ER_BAD_FIELD_ERROR',
+05/24 04:26:21
+travel-service-042
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5) {
+05/24 04:26:21
+travel-service-042
+    at /usr/src/app/src/routes/carpool.js:75:36
+05/24 04:26:21
+travel-service-042
+发布顺风车错误: Error: Unknown column 'carpool_order_id' in 'field list'

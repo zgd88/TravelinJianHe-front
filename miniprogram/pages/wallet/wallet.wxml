@@ -1,0 +1,28 @@
+<view class="page">
+  <!-- 余额卡片 -->
+  <view class="balance-card">
+    <text class="balance-label">{{role === 'driver' ? '我的收入' : '我的钱包'}}</text>
+    <text class="balance-value">¥{{balance}}</text>
+    <text class="balance-hint">{{role === 'driver' ? '累计接单收入' : '累计消费'}}</text>
+    <button class="topup-btn" bindtap="goTopUp" wx:if="{{role !== 'driver'}}">充值</button>
+  </view>
+
+  <!-- 交易记录 -->
+  <view class="tx-list" wx:if="{{!loading}}">
+    <text class="tx-title">交易记录</text>
+    <view class="tx-item" wx:for="{{recentTransactions}}" wx:key="*this">
+      <view class="tx-left">
+        <text class="tx-desc">{{item.desc}}</text>
+        <text class="tx-date">{{item.date}}</text>
+      </view>
+      <text class="tx-amount {{item.color}}">{{item.amount}}</text>
+    </view>
+    <view class="empty" wx:if="{{recentTransactions.length === 0}}">
+      <text class="empty-text">暂无交易记录</text>
+    </view>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

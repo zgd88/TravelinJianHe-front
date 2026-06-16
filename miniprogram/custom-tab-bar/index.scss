@@ -1,0 +1,16 @@
+.tab-bar {
+  display: flex;
+  background: #fff;
+  border-top: 1rpx solid #e8e8e8;
+  box-shadow: 0 -2rpx 8rpx rgba(0,0,0,.04);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 12rpx 0;
+}
+.tab-item .tab-icon { display: block; font-size: 40rpx; color: #bbb; }
+.tab-item .tab-text { display: block; font-size: 20rpx; color: #999; margin-top: 2rpx; }
+.tab-item.active .tab-icon { color: #1a1a1a; }
+.tab-item.active .tab-text { color: #1a1a1a; font-weight: 600; }

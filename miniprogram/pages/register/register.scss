@@ -1,0 +1,122 @@
+/* pages/register/register.scss */
+page {
+  background-color: #ffffff;
+  height: 100vh;
+}
+
+.page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0 40rpx;
+}
+
+.register-container {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 32rpx;
+  box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.05);
+  padding: 80rpx 50rpx 60rpx;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 70rpx;
+}
+
+.register-title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12rpx;
+}
+
+.register-subtitle {
+  display: block;
+  font-size: 26rpx;
+  color: #8c8c8c;
+  letter-spacing: 2rpx;
+}
+
+.error-message {
+  background: #fff2f0;
+  border: 2rpx solid #ffccc7;
+  border-radius: 12rpx;
+  padding: 16rpx 24rpx;
+  color: #ff4d4f;
+  font-size: 26rpx;
+  margin-bottom: 30rpx;
+}
+
+.input-group {
+  margin-bottom: 35rpx;
+}
+
+.input-label {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12rpx;
+  display: block;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  background: #f8f9fb;
+  border: 2rpx solid #eaedf2;
+  border-radius: 20rpx;
+  padding: 0 24rpx;
+}
+
+.input-icon-emoji {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+  line-height: 1;
+}
+
+.input-field {
+  flex: 1;
+  padding: 28rpx 0;
+  font-size: 30rpx;
+  color: #1a1a1a;
+}
+
+.toggle-pwd {
+  font-size: 24rpx;
+  color: #2c2c2c;
+  padding: 10rpx 0 10rpx 10rpx;
+  white-space: nowrap;
+}
+
+.register-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #2c2c2c, #2c2c2c);
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: 700;
+  padding: 28rpx 0;
+  border-radius: 20rpx;
+  margin-top: 20rpx;
+  letter-spacing: 4rpx;
+  box-shadow: 0 12rpx 28rpx rgba(255, 107, 0, 0.25);
+  border: none;
+}
+
+.register-btn[disabled] {
+  opacity: 0.7;
+}
+
+.login-link {
+  text-align: center;
+  margin-top: 40rpx;
+  font-size: 26rpx;
+  color: #8c8c8c;
+}
+
+.link-text {
+  color: #2c2c2c;
+  font-weight: 600;
+}

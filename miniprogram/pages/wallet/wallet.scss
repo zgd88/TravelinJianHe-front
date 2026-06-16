@@ -1,0 +1,31 @@
+page { background: #ffffff; }
+
+.balance-card {
+  background: linear-gradient(135deg, #2c2c2c, #2c2c2c);
+  margin: 24rpx; border-radius: 20rpx;
+  padding: 40rpx 30rpx; color: #fff; text-align: center;
+}
+.balance-label { font-size: 26rpx; opacity: 0.9; }
+.balance-value { font-size: 64rpx; font-weight: 700; display: block; margin: 12rpx 0; }
+.balance-hint { font-size: 24rpx; opacity: 0.75; }
+.topup-btn {
+  margin-top: 24rpx; width: 240rpx; background: rgba(255,255,255,0.2);
+  color: #fff; font-size: 28rpx; padding: 16rpx 0; border-radius: 30rpx; border: none;
+}
+.topup-btn::after { border: none; }
+
+.tx-list { margin: 0 24rpx; }
+.tx-title { font-size: 28rpx; font-weight: 700; color: #1a1a1a; display: block; padding: 16rpx 0; }
+.tx-item {
+  display: flex; justify-content: space-between; align-items: center;
+  background: #fff; padding: 24rpx; border-radius: 14rpx; margin-bottom: 10rpx;
+}
+.tx-desc { font-size: 28rpx; color: #333; display: block; }
+.tx-date { font-size: 22rpx; color: #bbb; margin-top: 4rpx; }
+.tx-amount { font-size: 30rpx; font-weight: 700; }
+.tx-amount.green { color: #2c2c2c; }
+.tx-amount.red { color: #ff4d4f; }
+
+.empty { text-align: center; padding: 60rpx 0; }
+.empty-text { font-size: 26rpx; color: #999; }
+.loading { text-align: center; padding: 80rpx 0; color: #999; font-size: 26rpx; }

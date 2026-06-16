@@ -1,0 +1,55 @@
+<!--pages/order-list/order-list.wxml-->
+<view class="page">
+  <!-- Tab 筛选 -->
+  <view class="tab-bar">
+    <view class="tab-item {{filter === 'all' ? 'active' : ''}}" bindtap="switchFilter" data-filter="all">
+      <text>全部订单</text>
+    </view>
+    <view class="tab-item {{filter === 'completed' ? 'active' : ''}}" bindtap="switchFilter" data-filter="completed">
+      <text>已完成</text>
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="order-list" wx:if="{{!loading}}">
+    <view class="order-item" wx:for="{{orders}}" wx:key="id" bindtap="showDetail" data-item="{{item}}">
+      <view class="order-top">
+        <view class="order-date-wrap">
+          <text class="order-date">{{item.date}}</text>
+          <text class="order-time" wx:if="{{item.time}}">{{item.time}}</text>
+        </view>
+        <view class="order-tags">
+          <text class="order-role-tag">{{item.myRole === 'driver' ? '接单' : '出行'}}</text>
+          <view class="order-status-tag {{item.statusClass}}">
+            <text>{{item.statusText}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="order-route">
+        <view class="route-row">
+          <view class="route-dot start"></view>
+          <text class="order-addr">{{item.pickup}}</text>
+        </view>
+        <view class="route-row">
+          <view class="route-dot end"></view>
+          <text class="order-addr">{{item.dest}}</text>
+        </view>
+      </view>
+      <view class="order-bottom" wx:if="{{item.price > 0 || item.distance}}">
+        <text class="order-distance" wx:if="{{item.distance}}">{{item.distance}}</text>
+        <text class="order-price" wx:if="{{item.price > 0}}">¥{{item.price}}</text>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{orders.length === 0}}">
+      <text class="empty-icon">{{filter === 'completed' ? '📭' : '🧭'}}</text>
+      <text class="empty-text">{{filter === 'completed' ? '暂无已完成订单' : (role === 'driver' ? '暂无接单记录，去首页看看吧' : '还没有出行记录，快去叫一单吧')}}</text>
+    </view>
+  </view>
+
+  <!-- 加载 -->
+  <view class="loading" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text>加载中...</text>
+  </view>
+</view>

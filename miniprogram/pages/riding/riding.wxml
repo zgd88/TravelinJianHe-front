@@ -1,0 +1,108 @@
+<!--pages/riding/riding.wxml-->
+<view class="page">
+
+  <!-- 加载中 -->
+  <view class="loading-mask" wx:if="{{loading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">获取行程信息...</text>
+  </view>
+
+  <!-- 地图区域 -->
+  <map
+    id="ridingMap"
+    class="map"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    scale="15"
+    markers="{{markers}}"
+    polyline="{{polyline}}"
+    show-location="{{true}}"
+  >
+  </map>
+
+  <!-- 顶部状态条 -->
+  <view class="status-top">
+    <view class="status-box">
+      <text class="status-dot"></text>
+      <text class="status-text">{{statusText}}</text>
+    </view>
+  </view>
+
+  <!-- 聊天浮窗 -->
+  <view class="chat-float" wx:if="{{showChat}}">
+    <view class="chat-header">
+      <text class="chat-title">与司机聊天</text>
+      <text class="chat-close" bindtap="toggleChat">✕</text>
+    </view>
+    <scroll-view class="chat-body" scroll-y scroll-into-view="chat-bottom">
+      <view class="chat-msg {{item.from === 'passenger' ? 'me' : 'other'}}" wx:for="{{messages}}" wx:key="*this">
+        <text class="msg-text">{{item.text}}</text>
+        <text class="msg-time">{{item.time}}</text>
+      </view>
+      <view id="chat-bottom"></view>
+    </scroll-view>
+    <view class="chat-footer">
+      <input class="chat-input" value="{{chatText}}" bindinput="onChatInput" confirm-type="send" bindconfirm="sendMessage" placeholder="输入消息..."/>
+      <text class="chat-send" bindtap="sendMessage">发送</text>
+    </view>
+  </view>
+
+  <!-- 聊天气泡按钮 -->
+  <view class="chat-bubble" wx:if="{{!showChat}}" bindtap="toggleChat">
+    <text class="bubble-icon">💬</text>
+    <text class="bubble-badge" wx:if="{{unreadCount > 0}}">{{unreadCount}}</text>
+  </view>
+
+  <!-- 底部司机信息卡片 -->
+  <view class="driver-panel">
+    
+    <!-- 司机基本信息 -->
+    <view class="driver-basic">
+      <view class="driver-avatar">
+        <text class="avatar-emoji">👨‍✈️</text>
+      </view>
+      <view class="driver-detail">
+        <text class="driver-name">{{driverName}}</text>
+        <text class="car-desc">{{carColor}} {{carModel}} {{carPlate}}</text>
+      </view>
+      <view class="contact-btn" bindtap="callDriver">
+        <text>📞</text>
+      </view>
+    </view>
+
+    <!-- 行程信息 -->
+    <view class="trip-info">
+      <view class="trip-row">
+        <view class="trip-dot start-dot"></view>
+        <text class="trip-addr">当前位置</text>
+      </view>
+      <view class="trip-line"></view>
+      <view class="trip-row">
+        <view class="trip-dot end-dot"></view>
+        <text class="trip-addr">{{destination}}</text>
+      </view>
+    </view>
+
+    <!-- 预估信息 -->
+    <view class="estimate">
+      <view class="estimate-item">
+        <text class="estimate-label">预估费用</text>
+        <text class="estimate-price">¥{{price}}</text>
+      </view>
+      <view class="estimate-item">
+        <text class="estimate-label">预计到达</text>
+        <text class="estimate-time">{{eta}}分钟</text>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="actions">
+  <button class="btn-cancel" bindtap="cancelTrip">取消订单</button>
+  <button class="btn-call" bindtap="callDriver">联系司机</button>
+  <button class="btn-arrive" bindtap="arriveDest">到达目的地</button>
+</view>
+    
+
+  </view>
+
+</view>

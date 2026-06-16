@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(xargs grep -l \"custom-tab-bar\")",
+      "Bash(git commit *)",
+      "WebFetch(domain:lbs.qq.com)",
+      "WebSearch",
+      "Bash(ssh *)"
+    ]
+  }
+}
