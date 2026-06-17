@@ -14,8 +14,6 @@ Page({
     estimateDistance: '--',
 
     waitSeconds: 0,
-    waitTimer: null as any,
-    pollTimer: null as any,
   },
 
   onLoad(options: any) {
@@ -32,13 +30,12 @@ Page({
     this.startPolling();
   },
 
-  onUnload() {
-    this.clearTimers();
-  },
+  onUnload() { this.clearTimers(); },
+  onHide() { this.clearTimers(); },
 
   clearTimers() {
-    if (this.data.waitTimer) clearInterval(this.data.waitTimer);
-    if (this.data.pollTimer) clearInterval(this.data.pollTimer);
+    if ((this as any)._waitTimer) clearInterval((this as any)._waitTimer);
+    if ((this as any)._pollTimer) clearInterval((this as any)._pollTimer);
   },
 
   // 加载订单详情获取真实估算
@@ -87,7 +84,7 @@ Page({
 
   startWaiting() {
     this.setData({ waitSeconds: 0 });
-    this.data.waitTimer = setInterval(() => {
+    (this as any)._waitTimer = setInterval(() => {
       const seconds = this.data.waitSeconds + 1;
       this.setData({ waitSeconds: seconds });
       if (seconds > 30) {
@@ -97,7 +94,7 @@ Page({
   },
 
   startPolling() {
-    this.data.pollTimer = setInterval(() => {
+    (this as any)._pollTimer = setInterval(() => {
       this.checkOrderStatus();
     }, 3000);
   },

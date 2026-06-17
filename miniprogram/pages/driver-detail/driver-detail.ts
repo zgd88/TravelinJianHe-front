@@ -1,5 +1,7 @@
 import { BASE_URL } from '../../utils/api';
 // pages/driver-detail/driver-detail.ts
+import { haversineKm, now } from '../../utils/geo';
+
 Page({
   data: {
     orderId: 0,
@@ -57,9 +59,11 @@ Page({
   },
 
   cleanup() {
+    (this as any)._wsClosed = true;
     if (this.locationTimer) clearInterval(this.locationTimer);
     if (this.socketTask) {
-      this.socketTask.close({ code: 1000, reason: '页面关闭' });
+      try { this.socketTask.close({ code: 1000, reason: '页面关闭' }); } catch (e) {}
+      this.socketTask = null;
     }
   },
 
@@ -115,12 +119,7 @@ Page({
     const lat2 = order.dest_lat;
     const lng2 = order.dest_lng;
     if (!lat1 || !lng1 || !lat2 || !lng2) return '--';
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLng = (lng2 - lng1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) ** 2 + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return (R * c).toFixed(1) + ' km';
+    return haversineKm(lat1, lng1, lat2, lng2).toFixed(1) + ' km';
   },
 
   // 更新地图标记
@@ -186,7 +185,7 @@ Page({
   async connectWebSocket() {
     try {
       const socketTask = wx.connectSocket({
-        url: 'wss://zzggdd.com/ws?role=driver&orderId=' + this.data.orderId
+        url: 'wss://zzggdd.com/ws?role=driver&orderId=' + this.data.orderId + '&token=' + (wx.getStorageSync('token') || '')
       });
 
       this.socketTask = socketTask;
@@ -211,6 +210,11 @@ Page({
 
       socketTask.onClose(() => {
         this.setData({ socketReady: false });
+        if (!(this as any)._wsClosed) {
+          const delay = Math.min(1000 * Math.pow(2, ((this as any)._reconnectCount || 0)), 15000);
+          (this as any)._reconnectCount = ((this as any)._reconnectCount || 0) + 1;
+          setTimeout(() => this.connectWebSocket(), delay);
+        }
       });
 
       socketTask.onError((err: any) => {

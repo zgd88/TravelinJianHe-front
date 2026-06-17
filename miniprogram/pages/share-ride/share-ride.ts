@@ -29,6 +29,7 @@ Page({
   },
 
   onUnload() { if (this._timer) clearInterval(this._timer); },
+  onHide() { if (this._timer) clearInterval(this._timer); },
 
   // 加载可拼的订单
   loadMatches() {

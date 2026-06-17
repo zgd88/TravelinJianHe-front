@@ -114,8 +114,9 @@ Page({
     const keyword = e.detail.value;
     this.setData({ keyword, showHistory: false });
 
+    if ((this as any)._searchDebounce) clearTimeout((this as any)._searchDebounce);
     if (keyword.trim().length >= 1) {
-      this.searchLocation(keyword);
+      (this as any)._searchDebounce = setTimeout(() => this.searchLocation(keyword), 300);
     } else {
       this.setData({ suggestions: [], showHistory: true });
     }

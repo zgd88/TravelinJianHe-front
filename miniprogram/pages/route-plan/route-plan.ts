@@ -1,5 +1,7 @@
 import { BASE_URL } from '../../utils/api';
 // pages/route-plan/route-plan.ts
+import { calcFare } from '../../utils/geo';
+
 Page({
   data: {
     pickupLat: 0,
@@ -205,8 +207,7 @@ Page({
   },
 
   calcFareByDistance(dist: number): number {
-    const fare = dist <= 3 ? 8 : 8 + (dist - 3) * 2;
-    return Math.round(fare);
+    return Math.round(calcFare(dist));
   },
 
   // 格式化

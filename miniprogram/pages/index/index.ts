@@ -1,5 +1,6 @@
 import { BASE_URL } from '../../utils/api';
 // pages/index/index.ts
+import { haversineKm, calcFare } from '../../utils/geo';
 const { DEFAULT_LOCATION } = require('../../utils/map');
 
 Page({
@@ -236,16 +237,10 @@ Page({
     const { destLatitude, destLongitude } = this.data;
     if (!destLatitude || !destLongitude) return;
 
-    const R = 6371;
-    const dLat = (destLatitude - center.latitude) * Math.PI / 180;
-    const dLng = (destLongitude - center.longitude) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) ** 2 + Math.cos(center.latitude * Math.PI / 180) * Math.cos(destLatitude * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-    const dist = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const fare = dist <= 3 ? 8 : 8 + (dist - 3) * 2;
-
+    const dist = haversineKm(center.latitude, center.longitude, destLatitude, destLongitude);
     this.setData({
       estimateDistance: dist.toFixed(1),
-      estimatePrice: '¥' + Math.round(fare).toString()
+      estimatePrice: '¥' + Math.round(calcFare(dist)).toString()
     });
   },
 

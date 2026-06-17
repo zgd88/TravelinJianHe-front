@@ -1,5 +1,7 @@
 import { BASE_URL } from '../../utils/api';
 // pages/riding/riding.ts
+import { haversineKm, calcFare, now } from '../../utils/geo';
+
 Page({
   data: {
     latitude: 30.6598,
@@ -48,6 +50,7 @@ Page({
   },
 
   cleanup() {
+    (this as any)._wsClosed = true;
     if (this.socketTask) {
       try { this.socketTask.close({ code: 1000, reason: '页面关闭' }); } catch (e) {}
       this.socketTask = null;
@@ -105,18 +108,8 @@ Page({
     });
   },
 
-  // 估算费用（后端未计价时 fallback）
   estimateFare(lat1: number, lng1: number, lat2: number, lng2: number): string {
-    if (!lat1 || !lng1 || !lat2 || !lng2) return '25';
-    const R = 6371;
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLng = (lng2 - lng1) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) ** 2
-            + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
-            * Math.sin(dLng / 2) ** 2;
-    const dist = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const fare = dist <= 3 ? 8 : 8 + (dist - 3) * 2;
-    return String(Math.round(fare));
+    return String(Math.round(calcFare(haversineKm(lat1, lng1, lat2, lng2))));
   },
 
   // ========== 地图标记 ==========
@@ -157,13 +150,14 @@ Page({
   async connectWebSocket() {
     try {
       const socketTask = wx.connectSocket({
-        url: 'wss://zzggdd.com/ws?role=passenger&orderId=' + this.data.orderId
+        url: 'wss://zzggdd.com/ws?role=passenger&orderId=' + this.data.orderId + '&token=' + (wx.getStorageSync('token') || '')
       });
 
       this.socketTask = socketTask;
 
       socketTask.onOpen(() => {
         console.log('乘客 WebSocket 已连接');
+        (this as any)._reconnectCount = 0;
       });
 
       socketTask.onMessage((res: any) => {
@@ -184,6 +178,11 @@ Page({
 
       socketTask.onClose(() => {
         console.log('乘客 WebSocket 断开');
+        if (!(this as any)._wsClosed) {
+          const delay = Math.min(1000 * Math.pow(2, ((this as any)._reconnectCount || 0)), 15000);
+          (this as any)._reconnectCount = ((this as any)._reconnectCount || 0) + 1;
+          setTimeout(() => this.connectWebSocket(), delay);
+        }
       });
 
       socketTask.onError((err: any) => {
@@ -217,11 +216,6 @@ Page({
       data: JSON.stringify({ type: 'message', text, from: 'passenger' })
     });
   },
-  now() {
-    const d = new Date();
-    return `${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
-  },
-
   handleStatusChange(status: string, price: number) {
     const statusMap: Record<string, string> = {
       arrived: '司机已到达上车点',
