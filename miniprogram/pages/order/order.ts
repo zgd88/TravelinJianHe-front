@@ -30,7 +30,9 @@ Page({
     this.startPolling();
   },
 
-  onUnload() { this.clearTimers(); },
+  onUnload() {
+    this.clearTimers();
+  },
   onHide() { this.clearTimers(); },
 
   clearTimers() {
@@ -158,20 +160,14 @@ Page({
 
   // 取消订单
   cancelOrder() {
-    wx.showActionSheet({
-      itemList: ['司机距离远', '行程有变动', '等待时间过长', '其他原因'],
+    wx.showModal({
+      title: '取消订单',
+      content: '确定要取消本次叫车吗？',
+      confirmText: '确认取消',
+      confirmColor: '#ff4d4f',
+      cancelText: '我再等等',
       success: (res) => {
-        const reasons = ['司机距离远', '行程有变动', '等待时间过长', '其他原因'];
-        const reason = reasons[res.tapIndex];
-        wx.showModal({
-          title: '确认取消',
-          content: '取消原因：' + reason + '\n确认取消本次叫车？',
-          confirmText: '确认取消',
-          confirmColor: '#ff4d4f',
-          success: (modalRes) => {
-            if (modalRes.confirm) this.doCancel(reason);
-          }
-        });
+        if (res.confirm) this.doCancel('乘客取消');
       }
     });
   },

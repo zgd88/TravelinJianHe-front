@@ -39,6 +39,7 @@ Page({
     wx.request({
       url: BASE_URL + `/api/order/share-match?pickupLat=${pickupLat}&pickupLng=${pickupLng}&destLat=${destLat}&destLng=${destLng}`,
       method: 'GET',
+      header: { 'Authorization': 'Bearer ' + (token || '') }
     }).then((res: any) => {
       if (res.data.code === 200) {
         const matches = (res.data.data || []).map((m: any) => ({
@@ -74,6 +75,7 @@ Page({
       url: BASE_URL + '/api/order/join/' + item.id,
       method: 'POST',
       data: { pickupLat, pickupLng, pickupAddr, destLat, destLng, destAddr },
+      header: { 'Authorization': 'Bearer ' + (token || '') }
     }).then((res: any) => {
       if (res.data.code === 200) {
         wx.showToast({ title: '拼车成功！', icon: 'success' });
@@ -106,6 +108,7 @@ Page({
         destLat, destLng, destAddr,
         rideType: 'share'
       },
+      header: { 'Authorization': 'Bearer ' + (token || '') }
     }).then((res: any) => {
       if (res.data.code === 200) {
         const orderId = res.data.data.orderId;
@@ -124,6 +127,7 @@ Page({
       wx.request({
         url: BASE_URL + '/api/order/status/' + orderId,
         method: 'GET',
+        header: { 'Authorization': 'Bearer ' + (token || '') }
       }).then((res: any) => {
         if (res.data.code === 200 && res.data.data && res.data.data.status !== 'pending') {
           clearInterval(this._timer);

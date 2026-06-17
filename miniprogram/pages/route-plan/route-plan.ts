@@ -24,6 +24,14 @@ Page({
   },
 
   goBack() {
+    const pages = getCurrentPages();
+    const indexPage = pages[pages.length - 2];
+    if (indexPage) {
+      indexPage.setData({
+        destination: '', destLatitude: 0, destLongitude: 0,
+        estimateDistance: '', estimatePrice: '', markers: [], polyline: [], routePoints: []
+      });
+    }
     wx.navigateBack({ delta: 1 });
   },
 

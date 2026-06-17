@@ -1,7 +1,11 @@
 // app.ts
-// 全局补丁: wx.request 返回 Promise
+// 全局补丁: wx.request 返回 Promise + 自动带 Authorization
 const _origRequest = wx.request;
 (wx as any).request = (options: any) => {
+  const token = wx.getStorageSync('token');
+  if (token) {
+    options.header = Object.assign({}, options.header, { 'Authorization': 'Bearer ' + token });
+  }
   return new Promise((resolve, reject) => {
     _origRequest.call(wx, Object.assign({}, options, {
       success: (res: any) => resolve(res),
