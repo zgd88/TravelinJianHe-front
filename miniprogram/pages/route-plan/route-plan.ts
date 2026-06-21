@@ -24,15 +24,21 @@ Page({
   },
 
   goBack() {
+    wx.navigateBack({ delta: 1 });
+  },
+
+  // 拦截原生导航栏返回（或 goBack）时清除首页路线数据
+  onUnload() {
+    if ((this as any)._confirmed) return;
     const pages = getCurrentPages();
     const indexPage = pages[pages.length - 2];
     if (indexPage) {
       indexPage.setData({
         destination: '', destLatitude: 0, destLongitude: 0,
-        estimateDistance: '', estimatePrice: '', markers: [], polyline: [], routePoints: []
+        estimateDistance: '', estimatePrice: '', markers: [], polyline: [], routePoints: [],
+        showCallBtns: false
       });
     }
-    wx.navigateBack({ delta: 1 });
   },
 
   onLoad(options: any) {
@@ -211,6 +217,7 @@ Page({
         routePoints: routePoints,
       });
     }
+    (this as any)._confirmed = true;
     wx.navigateBack({ delta: 1 });
   },
 

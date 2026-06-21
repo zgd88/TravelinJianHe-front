@@ -156,6 +156,21 @@ page {
   font-size: 42rpx; color: #333; box-shadow: 0 2rpx 8rpx rgba(0,0,0,.1);
 }
 
+/* ========== 订单悬浮球 ========== */
+.order-float {
+  position: absolute; top: 200rpx; right: 20rpx; z-index: 300;
+  background: #ff4d4f; border-radius: 50rpx;
+  padding: 14rpx 22rpx; display: flex; align-items: center; gap: 8rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255,77,79,.35);
+  animation: floatPulse 2s ease infinite;
+}
+@keyframes floatPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.float-icon { font-size: 32rpx; }
+.float-text { font-size: 24rpx; color: #fff; font-weight: 600; }
+
 /* ========== 缩放控件 ========== */
 .zoom-controls {
   position: absolute;

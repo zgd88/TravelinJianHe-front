@@ -16,6 +16,9 @@ Page({
     routePoints: [] as any[],
     showCallBtns: false,
     calling: false,
+    hasActiveOrder: false,
+    activeOrderId: 0,
+    activeOrderStatus: '',
     estimatePrice: '',
     estimateDistance: '',
     pickupAddr: '正在获取位置...',
@@ -32,7 +35,43 @@ Page({
       this.updateEstimate();
       this.setData({ showCallBtns: true });
     }
+    this.checkActiveOrder();
     if (typeof this.getTabBar === 'function') this.getTabBar().setData({ selected: 0 });
+  },
+
+  // 检查是否有未完成订单
+  checkActiveOrder() {
+    const token = wx.getStorageSync('token');
+    if (!token) return;
+    wx.request({
+      url: 'https://zzggdd.com/api/order/my-orders',
+      method: 'GET',
+      header: { 'Authorization': 'Bearer ' + token }
+    }).then((res: any) => {
+      const orders = res.data.data || [];
+      const active = orders.find((o: any) =>
+        ['pending', 'accepted', 'arrived', 'running'].includes(o.status) &&
+        String(o.user_id) === String((wx.getStorageSync('userInfo') || {}).userId || '')
+      );
+      if (active) {
+        this.setData({
+          hasActiveOrder: true,
+          activeOrderId: active.id,
+          activeOrderStatus: active.status
+        });
+      } else {
+        this.setData({ hasActiveOrder: false, activeOrderId: 0 });
+      }
+    }).catch(() => {});
+  },
+
+  // 跳转到进行中的订单
+  goActiveOrder() {
+    const { activeOrderId, activeOrderStatus } = this.data;
+    const url = activeOrderStatus === 'pending'
+      ? '/pages/order/order?orderId=' + activeOrderId
+      : '/pages/riding/riding?orderId=' + activeOrderId;
+    wx.navigateTo({ url });
   },
 
   // 返回路线规划页重选路线
@@ -124,12 +163,11 @@ Page({
       const mapContext = wx.createMapContext('map', this);
       mapContext.getCenterLocation({
         success: (res) => {
+          // 已选目的地时出发点锁定，不响应拖拽/缩放
+          if (this.data.destination) return;
           (this as any)._centerLat = res.latitude;
           (this as any)._centerLng = res.longitude;
-          if (e.causedBy === 'drag') {
-            this.reverseGeocode(res.latitude, res.longitude);
-          }
-          if (this.data.destination) this.updateEstimate();
+          if (e.causedBy === 'drag') this.reverseGeocode(res.latitude, res.longitude);
         }
       });
     }
@@ -246,6 +284,10 @@ Page({
 
   // ========== 叫车 ==========
   handleCallCar() {
+    if (this.data.hasActiveOrder) {
+      wx.showToast({ title: '您有进行中的订单，请先完成', icon: 'none' });
+      return;
+    }
     const { destination, destLatitude, destLongitude, pickupAddr } = this.data;
 
     if (!destination) {

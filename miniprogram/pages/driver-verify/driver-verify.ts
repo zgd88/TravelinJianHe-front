@@ -113,12 +113,25 @@ Page({
         const tempFilePath = res.tempFilePaths[0];
         this.setData({ [loadingField]: true });
 
-        // 上传到云存储
-        wx.cloud.uploadFile({
-          cloudPath: 'verify/' + Date.now() + '_' + field + '.jpg',
+        const token = wx.getStorageSync('token');
+        wx.uploadFile({
+          url: BASE_URL + '/api/verify/upload',
           filePath: tempFilePath,
-          success: (uploadRes) => {
-            this.setData({ [field]: uploadRes.fileID, [loadingField]: false });
+          name: 'file',
+          header: { 'Authorization': 'Bearer ' + token },
+          success: (uploadRes: any) => {
+            try {
+              const data = JSON.parse(uploadRes.data);
+              if (data.code === 200) {
+                this.setData({ [field]: data.data.url, [loadingField]: false });
+              } else {
+                this.setData({ [loadingField]: false });
+                wx.showToast({ title: data.msg || '上传失败', icon: 'none' });
+              }
+            } catch (e) {
+              this.setData({ [loadingField]: false });
+              wx.showToast({ title: '上传失败，请重试', icon: 'none' });
+            }
           },
           fail: () => {
             this.setData({ [loadingField]: false });

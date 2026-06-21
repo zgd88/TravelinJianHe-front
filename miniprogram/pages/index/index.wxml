@@ -6,7 +6,7 @@
     show-location="{{true}}"
     bindregionchange="onMapRegionChange"
     bindmarkertap="onMarkerTap">
-    <cover-view class="map-center-pin">
+    <cover-view class="map-center-pin" wx:if="{{!destination}}">
       <cover-view class="pin-icon">▼</cover-view>
       <cover-view class="pin-shadow">●</cover-view>
     </cover-view>
@@ -15,6 +15,12 @@
   <!-- 返回（选好目的地后显示） -->
   <view class="back-float" wx:if="{{destination}}" bindtap="backToRoute">
     <text>‹</text>
+  </view>
+
+  <!-- 活跃订单悬浮球 -->
+  <view class="order-float" wx:if="{{hasActiveOrder}}" bindtap="goActiveOrder">
+    <text class="float-icon">📋</text>
+    <text class="float-text">进行中</text>
   </view>
 
   <view class="zoom-controls">
