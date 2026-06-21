@@ -60,6 +60,7 @@ Page({
             submittedData: verification
           });
         } else if (status === 'rejected') {
+          const fixUrl = (url: string) => url && url.startsWith('/uploads/') ? BASE_URL + url : url;
           this.setData({
             loading: false, verifyStatus: 'rejected', showForm: true,
             rejectReason: reject_reason || '审核未通过',
@@ -69,8 +70,8 @@ Page({
             vehiclePlate: verification.vehicle_plate || '',
             vehicleModel: verification.vehicle_model || '',
             vehicleColor: verification.vehicle_color || '',
-            idCardPhoto: verification.id_card_photo || '',
-            driverLicensePhoto: verification.driver_license_photo || '',
+            idCardPhoto: fixUrl(verification.id_card_photo || ''),
+            driverLicensePhoto: fixUrl(verification.driver_license_photo || ''),
           });
         }
       } else {
@@ -111,6 +112,11 @@ Page({
       sourceType: ['album', 'camera'],
       success: (res) => {
         const tempFilePath = res.tempFilePaths[0];
+        const tempFile: any = (res.tempFiles || [])[0];
+        if (tempFile && tempFile.size > 10 * 1024 * 1024) {
+          wx.showToast({ title: '图片不能超过10MB', icon: 'none' });
+          return;
+        }
         this.setData({ [loadingField]: true });
 
         const token = wx.getStorageSync('token');
@@ -123,7 +129,7 @@ Page({
             try {
               const data = JSON.parse(uploadRes.data);
               if (data.code === 200) {
-                this.setData({ [field]: data.data.url, [loadingField]: false });
+                this.setData({ [field]: BASE_URL + data.data.url, [loadingField]: false });
               } else {
                 this.setData({ [loadingField]: false });
                 wx.showToast({ title: data.msg || '上传失败', icon: 'none' });
