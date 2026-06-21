@@ -52,11 +52,25 @@ Page({
     const token = wx.getStorageSync('token');
     if (!token) { this.setData({ verifyStatus: 'none' }); return; }
 
+    let settled = false;
+    const done = (status: string, rejectReason?: string) => {
+      if (settled) return;
+      settled = true;
+      this.setData({ verifyStatus: status, rejectReason: rejectReason || '' });
+    };
+
+    // 5秒超时兜底
+    setTimeout(() => done('approved'), 5000);
+
     api({ url: BASE_URL + '/api/verify/status', showError: false }).then((res: any) => {
-      if (res.code === 200) {
-        this.setData({ verifyStatus: res.data.status, rejectReason: res.data.reject_reason || '' });
-      } else {
-        this.setData({ verifyStatus: 'approved' });
+      try {
+        if (res.code === 200 && res.data) {
+          done(res.data.status, res.data.reject_reason);
+        } else {
+          done('approved');
+        }
+      } catch (e) {
+        done('approved');
       }
     });
   },
