@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/driver-detail/driver-detail.ts
 import { haversineKm, now } from '../../utils/geo';
 
@@ -71,7 +71,7 @@ Page({
   loadOrderDetail() {
     const token = wx.getStorageSync('token');
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/order/status/' + this.data.orderId,
       method: 'GET',
       header: {
@@ -328,7 +328,7 @@ Page({
 
   updateOrderStatus(action: string) {
     const token = wx.getStorageSync('token');
-    wx.request({
+    request({
       url: BASE_URL + '/api/order/' + action + '/' + this.data.orderId,
       method: 'POST',
       header: {

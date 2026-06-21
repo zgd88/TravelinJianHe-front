@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/riding/riding.ts
 import { haversineKm, calcFare, now } from '../../utils/geo';
 
@@ -61,7 +61,7 @@ Page({
   loadOrderDetail() {
     const token = wx.getStorageSync('token');
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/order/status/' + this.data.orderId,
       method: 'GET',
       header: {
@@ -288,7 +288,7 @@ Page({
   doCancel(reason: string) {
     const token = wx.getStorageSync('token');
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/order/cancel/' + this.data.orderId,
       method: 'POST',
       data: { reason },

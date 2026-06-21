@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/carpool-list/carpool-list.ts
 Page({
   data: {
@@ -32,7 +32,7 @@ Page({
       return;
     }
 
-    wx.request({
+    request({
       url: BASE_URL + `/api/carpool/search?pickupLat=${pickupLat}&pickupLng=${pickupLng}&destLat=${destLat}&destLng=${destLng}`,
       method: 'GET',
     }).then((res: any) => {

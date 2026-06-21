@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/choose-role/choose-role.ts
 Page({
   choosePassenger() {
@@ -15,7 +15,7 @@ Page({
 
     wx.showLoading({ title: '检查认证状态...' });
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/verify/status',
       method: 'GET',
       header: {

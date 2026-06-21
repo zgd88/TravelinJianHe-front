@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/driver-verify/driver-verify.ts
 Page({
   data: {
@@ -40,7 +40,7 @@ Page({
       return;
     }
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/verify/status',
       method: 'GET',
       header: {
@@ -169,7 +169,7 @@ Page({
     this.setData({ submitting: true, errorMsg: '' });
     const token = wx.getStorageSync('token');
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/verify/submit',
       method: 'POST',
       header: {

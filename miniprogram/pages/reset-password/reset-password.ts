@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/reset-password/reset-password.ts
 Page({
   data: {
@@ -54,7 +54,7 @@ Page({
 
     this.setData({ loading: true, errorMsg: '' });
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/auth/reset-password',
       method: 'POST',
       data: { phone: this.data.phone, password: this.data.password }

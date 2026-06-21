@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/search/search.ts
 const { DEFAULT_LOCATION } = require('../../utils/map');
 
@@ -48,7 +48,7 @@ Page({
     const token = wx.getStorageSync('token');
     if (!token) return;
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/order/my-orders',
       method: 'GET',
     }).then((res: any) => {
@@ -127,7 +127,7 @@ Page({
     this.setData({ loading: true });
     const token = wx.getStorageSync('token');
 
-    wx.request({
+    request({
       url: BASE_URL + `/api/map/place-suggestion?keyword=${encodeURIComponent(keyword)}`,
       method: 'GET',
     }).then((res: any) => {
@@ -176,7 +176,7 @@ Page({
     this.setData({ keyword: '', showHistory: false, loading: true });
     const token = wx.getStorageSync('token');
 
-    wx.request({
+    request({
       url: BASE_URL + `/api/map/place-search?keyword=${encodeURIComponent(keyword)}&lat=${lat}&lng=${lng}`,
       method: 'GET',
     }).then((res: any) => {

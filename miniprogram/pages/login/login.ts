@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/login/login.ts
 Page({
   data: {
@@ -47,7 +47,7 @@ Page({
     this.setData({ loading: true, errorMsg: '' });
     const { phone, password } = this.data;
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/auth/login',
       method: 'POST',
       data: { phone, password },

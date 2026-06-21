@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/carpool-publish/carpool-publish.ts
 Page({
   data: {
@@ -54,7 +54,7 @@ Page({
     this.setData({ submitting: true, errorMsg: '' });
     const token = wx.getStorageSync('token');
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/carpool/publish',
       method: 'POST',
       data: { pickupAddr, pickupLat, pickupLng, destAddr, destLat, destLng, seats, departTime: departFull, price },

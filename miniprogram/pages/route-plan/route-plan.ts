@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/route-plan/route-plan.ts
 import { calcFare } from '../../utils/geo';
 
@@ -82,7 +82,7 @@ Page({
     this.setData({ loading: true, errorMsg: '' });
     const token = wx.getStorageSync('token');
 
-    wx.request({
+    request({
       url: BASE_URL + `/api/map/direction?from=${pickupLat},${pickupLng}&to=${toLat},${toLng}`,
       method: 'GET',
     }).then((res: any) => {

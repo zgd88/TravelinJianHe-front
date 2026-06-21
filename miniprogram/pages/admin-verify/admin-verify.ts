@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/admin-verify/admin-verify.ts
 Page({
   data: {
@@ -22,7 +22,7 @@ Page({
     const token = wx.getStorageSync('token');
     if (!token) { this.setData({ loading: false }); return; }
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/verify/pending-list',
       method: 'GET',
     }).then((res: any) => {
@@ -85,7 +85,7 @@ Page({
     this.setData({ processing: true });
     const token = wx.getStorageSync('token');
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/verify/review',
       method: 'POST',
       data: { verification_id: id, action, reject_reason: reason || '' },

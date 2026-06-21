@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/order-list/order-list.ts
 import { haversineKm } from '../../utils/geo';
 
@@ -22,7 +22,7 @@ Page({
     const token = wx.getStorageSync('token');
     if (!token) { this.setData({ loading: false }); return; }
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/order/my-orders',
       method: 'GET',
     }).then((res: any) => {

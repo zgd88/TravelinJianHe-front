@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/mine/mine.ts
 Page({
   data: {
@@ -74,7 +74,7 @@ Page({
         // 同步到后端
         const token = wx.getStorageSync('token');
         if (token) {
-          wx.request({
+          request({
             url: BASE_URL + '/api/auth/profile',
             method: 'PUT',
             data: { avatar: tempFilePath },
@@ -113,7 +113,7 @@ Page({
     }
 
     const token = wx.getStorageSync('token');
-    wx.request({
+    request({
       url: BASE_URL + '/api/auth/profile',
       method: 'PUT',
       data: { nickname: name },
@@ -160,7 +160,7 @@ Page({
     const token = wx.getStorageSync('token');
     if (!token) return Promise.resolve();
 
-    return wx.request({
+    return request({
       url: BASE_URL + '/api/order/stats',
       method: 'GET',
       header: {
@@ -206,7 +206,7 @@ Page({
     const token = wx.getStorageSync('token');
     if (!token) return;
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/verify/status',
       method: 'GET',
       header: {

@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/share-ride/share-ride.ts
 Page({
   data: {
@@ -36,7 +36,7 @@ Page({
     const token = wx.getStorageSync('token');
     const { pickupLat, pickupLng, destLat, destLng } = this.data;
 
-    wx.request({
+    request({
       url: BASE_URL + `/api/order/share-match?pickupLat=${pickupLat}&pickupLng=${pickupLng}&destLat=${destLat}&destLng=${destLng}`,
       method: 'GET',
       header: { 'Authorization': 'Bearer ' + (token || '') }
@@ -71,7 +71,7 @@ Page({
     const token = wx.getStorageSync('token');
     const { pickupLat, pickupLng, pickupAddr, destLat, destLng, destAddr } = this.data;
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/order/join/' + item.id,
       method: 'POST',
       data: { pickupLat, pickupLng, pickupAddr, destLat, destLng, destAddr },
@@ -100,7 +100,7 @@ Page({
     const token = wx.getStorageSync('token');
     const { pickupLat, pickupLng, pickupAddr, destLat, destLng, destAddr } = this.data;
 
-    wx.request({
+    request({
       url: BASE_URL + '/api/order/create',
       method: 'POST',
       data: {
@@ -124,7 +124,7 @@ Page({
     const token = wx.getStorageSync('token');
     this._timer = setInterval(() => {
       this.setData({ waitSeconds: this.data.waitSeconds + 1 });
-      wx.request({
+      request({
         url: BASE_URL + '/api/order/status/' + orderId,
         method: 'GET',
         header: { 'Authorization': 'Bearer ' + (token || '') }

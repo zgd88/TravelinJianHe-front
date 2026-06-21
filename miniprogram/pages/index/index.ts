@@ -1,4 +1,4 @@
-import { BASE_URL } from '../../utils/api';
+import { BASE_URL , request } from '../../utils/api';
 // pages/index/index.ts
 import { haversineKm, calcFare } from '../../utils/geo';
 const { DEFAULT_LOCATION } = require('../../utils/map');
@@ -43,7 +43,7 @@ Page({
   checkActiveOrder() {
     const token = wx.getStorageSync('token');
     if (!token) return;
-    wx.request({
+    request({
       url: 'https://zzggdd.com/api/order/my-orders',
       method: 'GET',
       header: { 'Authorization': 'Bearer ' + token }
@@ -177,7 +177,7 @@ Page({
     if (this.data._geoDebounce) clearTimeout(this.data._geoDebounce);
     this.data._geoDebounce = setTimeout(() => {
       const token = wx.getStorageSync('token');
-      wx.request({
+      request({
         url: BASE_URL + `/api/map/geocoder?lat=${lat}&lng=${lng}`,
         method: 'GET',
       }).then((res: any) => {
@@ -302,7 +302,7 @@ Page({
 
         const token = wx.getStorageSync('token');
 
-        wx.request({
+        request({
           url: BASE_URL + '/api/order/create',
           method: 'POST',
           header: {
