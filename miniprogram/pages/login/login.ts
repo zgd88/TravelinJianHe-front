@@ -50,22 +50,23 @@ Page({
     wx.request({
       url: BASE_URL + '/api/auth/login',
       method: 'POST',
-      data: { phone, password }
-    }).then((res: any) => {
-      if (res.statusCode === 200 && res.data.code === 200) {
-        wx.setStorageSync('token', res.data.data.token);
-        wx.setStorageSync('userInfo', res.data.data);
-        wx.showToast({ title: '登录成功', icon: 'success' });
-        setTimeout(() => {
-          wx.navigateTo({ url: '/pages/choose-role/choose-role' });
-        }, 1000);
-      } else {
-        this.setData({ errorMsg: res.data.msg || '手机号或密码错误' });
+      data: { phone, password },
+      success: (res: any) => {
+        this.setData({ loading: false });
+        if (res.statusCode === 200 && res.data.code === 200) {
+          wx.setStorageSync('token', res.data.data.token);
+          wx.setStorageSync('userInfo', res.data.data);
+          wx.showToast({ title: '登录成功', icon: 'success' });
+          setTimeout(() => {
+            wx.navigateTo({ url: '/pages/choose-role/choose-role' });
+          }, 1000);
+        } else {
+          this.setData({ errorMsg: res.data.msg || '手机号或密码错误' });
+        }
+      },
+      fail: () => {
+        this.setData({ loading: false, errorMsg: '网络连接失败，请检查后端服务是否启动' });
       }
-    }).catch(() => {
-      this.setData({ errorMsg: '网络连接失败，请检查后端服务是否启动' });
-    }).finally(() => {
-      this.setData({ loading: false });
     });
   },
 
