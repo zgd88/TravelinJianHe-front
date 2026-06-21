@@ -77,27 +77,29 @@ Page({
     request({
       url: BASE_URL + '/api/auth/register',
       method: 'POST',
-      header: {
-        'Content-Type': 'application/json'
-      },
+      header: { 'Content-Type': 'application/json' },
       data: { phone, password }
     }).then((res: any) => {
-      console.log('注册响应:', res.data);
+      this.setData({ loading: false });
+      if (res.statusCode !== 200 || !res.data) {
+        const tips: Record<number, string> = { 502: '服务器维护中，请稍后再试', 503: '服务器繁忙，请稍后再试', 500: '服务器内部错误，请稍后再试' };
+        this.setData({ errorMsg: tips[res.statusCode] || `服务异常(${res.statusCode})，请稍后再试` });
+        return;
+      }
       if (res.data.code === 200) {
         wx.setStorageSync('token', res.data.data.token);
         wx.setStorageSync('userInfo', res.data.data);
         wx.showToast({ title: '注册成功', icon: 'success' });
         setTimeout(() => {
-          // wx.redirectTo({ url: '/pages/index/index' }); 跳转到用户端
           wx.navigateTo({ url: '/pages/choose-role/choose-role' });
         }, 1000);
+      } else if (res.data.code === 429) {
+        this.setData({ errorMsg: '操作太频繁，请稍后再试' });
       } else {
         this.setData({ errorMsg: res.data.msg || '注册失败' });
       }
     }).catch(() => {
-      this.setData({ errorMsg: '网络连接失败，请检查后端服务' });
-    }).finally(() => {
-      this.setData({ loading: false });
+      this.setData({ loading: false, errorMsg: '网络连接失败，请检查网络后重试' });
     });
   },
 

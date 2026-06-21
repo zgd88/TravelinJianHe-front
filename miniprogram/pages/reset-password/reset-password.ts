@@ -59,6 +59,12 @@ Page({
       method: 'POST',
       data: { phone: this.data.phone, password: this.data.password }
     }).then((res: any) => {
+      this.setData({ loading: false });
+      if (res.statusCode !== 200 || !res.data) {
+        const tips: Record<number, string> = { 502: '服务器维护中，请稍后再试', 503: '服务器繁忙，请稍后再试', 500: '服务器内部错误，请稍后再试' };
+        this.setData({ errorMsg: tips[res.statusCode] || `服务异常(${res.statusCode})，请稍后再试` });
+        return;
+      }
       if (res.data.code === 200) {
         wx.showModal({
           title: '密码重置成功',
@@ -70,9 +76,7 @@ Page({
         this.setData({ errorMsg: res.data.msg || '重置失败' });
       }
     }).catch(() => {
-      this.setData({ errorMsg: '网络连接失败' });
-    }).finally(() => {
-      this.setData({ loading: false });
+      this.setData({ loading: false, errorMsg: '网络连接失败，请检查网络后重试' });
     });
   },
 });
