@@ -20,6 +20,7 @@ Page({
     activeTab: 'pending',
     // 顺风车
     carpoolOrders: [] as any[],
+    hasOpenCarpool: false,
   },
 
   onLoad() {
@@ -80,17 +81,16 @@ Page({
   },
 
   goCarpoolPublish() {
-    api({ url: BASE_URL + '/api/carpool/my-with-orders', showError: false }).then((res: any) => {
-      if (res.code === 200 && (res.data || []).length > 0) {
-        wx.showToast({ title: '请先完成当前顺风车行程', icon: 'none' });
-      } else {
-        wx.navigateTo({ url: '/pages/carpool-publish/carpool-publish' });
-      }
-    });
+    wx.navigateTo({ url: '/pages/carpool-publish/carpool-publish' });
+  },
+  goCarpoolDetail(e: any) {
+    const id = e.currentTarget.dataset.id;
+    wx.navigateTo({ url: '/pages/carpool-detail/carpool-detail?id=' + id });
   },
   loadCarpools() {
     api({ url: BASE_URL + '/api/carpool/my-with-orders', showError: false }).then((res: any) => {
       if (res.code === 200) {
+        const statusMap: Record<string, string> = { open: '进行中', closed: '已结束', cancelled: '已取消' };
         const carpoolOrders = (res.data || []).map((c: any) => ({
           id: c.id,
           pickupAddr: c.pickupAddr,
@@ -98,9 +98,12 @@ Page({
           departTime: c.departTime ? c.departTime.slice(5, 16).replace('T', ' ') : '',
           price: c.price,
           seats: c.seats,
-          statusText: c.displayStatus || '进行中',
+          status: c.status,
+          statusText: statusMap[c.status] || c.displayStatus || '进行中',
         }));
-        this.setData({ carpoolOrders });
+        // 检查是否有 open 状态的订单
+        const hasOpen = carpoolOrders.some((c: any) => c.status === 'open');
+        this.setData({ carpoolOrders, hasOpenCarpool: hasOpen });
         if (this.data.myFilter === 'carpool') {
           this.setData({ filteredMyOrders: carpoolOrders as any[] });
         }

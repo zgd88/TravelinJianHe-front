@@ -5,6 +5,11 @@
   <view wx:elif="{{verifyStatus === 'pending'}}" class="verify-banner verify-pending" bindtap="goVerify"><text>⏳ 资质审核中，请耐心等待</text></view>
   <view wx:elif="{{verifyStatus === 'rejected'}}" class="verify-banner verify-error" bindtap="goVerify"><text>❌ 认证未通过：{{rejectReason}}，点击重新提交</text></view>
 
+  <!-- 顺风车进行中悬浮球 -->
+  <view class="carpool-float" wx:if="{{hasOpenCarpool && verifyStatus === 'approved'}}" bindtap="goCarpoolDetail" data-id="{{carpoolOrders[0].id}}">
+    <text class="float-icon">🚗</text>
+  </view>
+
   <!-- 头部统计 -->
   <view class="header" wx:if="{{verifyStatus === 'approved'}}">
     <view class="header-top">

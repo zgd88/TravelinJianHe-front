@@ -10,6 +10,7 @@
     "pages/share-ride/share-ride",
     "pages/carpool-list/carpool-list",
     "pages/carpool-publish/carpool-publish",
+    "pages/carpool-detail/carpool-detail",
     "pages/order/order",
     "pages/riding/riding",
     "pages/finish/finish",
