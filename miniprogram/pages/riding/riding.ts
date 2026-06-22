@@ -86,6 +86,15 @@ Page({
           : this.estimateFare(order.pickup_lat, order.pickup_lng, order.dest_lat, order.dest_lng);
         const destination = order.dest_addr || this.data.destination;
 
+        // 根据订单状态设置 UI
+        const statusTextMap: Record<string, string> = {
+          pending: '等待司机接单...',
+          accepted: '司机正在赶来',
+          arrived: '司机已到达上车点',
+          running: '行程进行中',
+        };
+        const tripRunning = order.status === 'running';
+
         this.setData({
           loading: false,
           driverName,
@@ -96,7 +105,8 @@ Page({
           carColor,
           price,
           destination,
-          statusText: '司机正在赶来',
+          statusText: statusTextMap[order.status] || '司机正在赶来',
+          tripRunning,
         });
 
         // 用真实坐标更新地图
@@ -223,18 +233,20 @@ Page({
       running: '行程进行中',
       completed: '行程已完成',
     };
-    const text = statusMap[status] || status;
-    this.setData({ statusText: text });
 
     if (status === 'running') {
-      this.setData({ tripRunning: true });
+      this.setData({ tripRunning: true, statusText: statusMap[status] || status });
       if (price > 0) this.setData({ price: String(price) });
+      return;
     }
 
     if (status === 'completed') {
       this.cleanup();
       wx.redirectTo({ url: '/pages/finish/finish?orderId=' + this.data.orderId });
+      return;
     }
+
+    this.setData({ statusText: statusMap[status] || status });
   },
 
   updateDriverMarker(lat: number, lng: number) {
@@ -253,7 +265,6 @@ Page({
     });
 
     this.setData({ markers: baseMarkers });
-    this.setData({ statusText: '司机正在赶来' });
   },
 
   // ========== 操作 ==========
