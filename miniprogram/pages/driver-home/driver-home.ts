@@ -176,16 +176,28 @@ Page({
 
   // ========== 待接订单 ==========
   loadOrders() {
-    api({ url: BASE_URL + '/api/order/pending', showError: false }).then((res: any) => {
-      if (res.code === 200) {
-        const data = res.data;
-        const newOrders = Array.isArray(data) ? data : [];
-        if (newOrders.length > 0 && newOrders.length > this.data.orders.length) {
-          wx.vibrateShort({ type: 'heavy' });
-        }
-        this.setData({ orders: newOrders });
-      } else {
-        this.setData({ orders: [] });
+    wx.getLocation({
+      type: 'gcj02',
+      success: (loc) => {
+        api({ url: BASE_URL + '/api/order/pending?lat=' + loc.latitude + '&lng=' + loc.longitude, showError: false }).then((res: any) => {
+          if (res.code === 200) {
+            const data = res.data;
+            const newOrders = Array.isArray(data) ? data : [];
+            if (newOrders.length > 0 && newOrders.length > this.data.orders.length) {
+              wx.vibrateShort({ type: 'heavy' });
+            }
+            this.setData({ orders: newOrders });
+          } else {
+            this.setData({ orders: [] });
+          }
+        });
+      },
+      fail: () => {
+        api({ url: BASE_URL + '/api/order/pending', showError: false }).then((res: any) => {
+          if (res.code === 200) {
+            this.setData({ orders: Array.isArray(res.data) ? res.data : [] });
+          }
+        });
       }
     });
   },

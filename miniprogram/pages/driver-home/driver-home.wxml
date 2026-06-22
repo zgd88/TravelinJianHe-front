@@ -61,7 +61,7 @@
           <view class="card-top" bindtap="acceptOrder" data-id="{{item.id}}">
             <view class="card-left">
               <text class="price">¥{{item.price}}</text>
-              <text class="distance">{{item.distance}}km</text>
+              <text class="distance">{{item.driverDist || item.distance}}km</text>
             </view>
             <button class="accept-btn">抢单</button>
           </view>
