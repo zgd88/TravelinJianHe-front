@@ -96,11 +96,14 @@
     </view>
 
     <!-- 操作按钮 -->
-    <view class="actions">
-  <button class="btn-cancel" bindtap="cancelTrip">取消订单</button>
-  <button class="btn-call" bindtap="callDriver">联系司机</button>
-  <button class="btn-arrive" bindtap="arriveDest">到达目的地</button>
-</view>
+    <view class="actions" wx:if="{{!tripRunning}}">
+      <button class="btn-cancel" bindtap="cancelTrip">取消订单</button>
+      <button class="btn-call" bindtap="callDriver">联系司机</button>
+      <button class="btn-arrive" bindtap="arriveDest">到达目的地</button>
+    </view>
+    <view class="actions" wx:else>
+      <view class="running-hint">行程进行中，请系好安全带</view>
+    </view>
     
 
   </view>

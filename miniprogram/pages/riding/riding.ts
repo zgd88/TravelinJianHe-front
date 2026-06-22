@@ -27,6 +27,7 @@ Page({
     destination: '',
     price: '0',
     statusText: '正在获取行程信息...',
+    tripRunning: false,
   },
 
   socketTask: null as any,
@@ -224,6 +225,11 @@ Page({
     };
     const text = statusMap[status] || status;
     this.setData({ statusText: text });
+
+    if (status === 'running') {
+      this.setData({ tripRunning: true });
+      if (price > 0) this.setData({ price: String(price) });
+    }
 
     if (status === 'completed') {
       this.cleanup();
