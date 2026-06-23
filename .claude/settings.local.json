@@ -10,7 +10,20 @@
       "WebSearch",
       "Bash(ssh *)",
       "Read(//e/Travel in JianHe/public/**)",
-      "Read(//e/Travel in JianHe/**)"
+      "Read(//e/Travel in JianHe/**)",
+      "WebFetch(domain:skillhub.cn)",
+      "Bash(npm install *)",
+      "Bash(npx @skill-hub/cli --help)",
+      "Bash(skillhub --version)",
+      "Bash(skillhub install *)",
+      "Bash(skillhub search *)",
+      "Bash(npm search *)",
+      "Bash(codegraph --help)",
+      "Bash(npm list *)",
+      "Bash(npm info *)",
+      "Bash(node -e ' *)",
+      "Bash(git checkout *)",
+      "Bash(git reset *)"
     ]
   }
 }
