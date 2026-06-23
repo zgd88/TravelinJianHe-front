@@ -161,7 +161,7 @@ Page({
   async connectWebSocket() {
     try {
       const socketTask = wx.connectSocket({
-        url: 'wss://zzggdd.com/ws?role=passenger&orderId=' + this.data.orderId + '&token=' + (wx.getStorageSync('token') || '')
+        url: 'wss://zzggdd.com/ws?role=passenger&orderId=' + this.data.orderId
       });
 
       this.socketTask = socketTask;
@@ -169,6 +169,10 @@ Page({
       socketTask.onOpen(() => {
         console.log('乘客 WebSocket 已连接');
         (this as any)._reconnectCount = 0;
+        // 首条消息发送 token 认证
+        socketTask.send({
+          data: JSON.stringify({ type: 'auth', token: wx.getStorageSync('token') || '' })
+        });
       });
 
       socketTask.onMessage((res: any) => {

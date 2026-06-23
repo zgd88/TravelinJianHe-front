@@ -1,5 +1,4 @@
-import api from '../../utils/api';
-import { BASE_URL } from '../../utils/api';
+import api, { BASE_URL } from '../../utils/api';
 
 Page({
   data: {

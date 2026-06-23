@@ -185,13 +185,16 @@ Page({
   async connectWebSocket() {
     try {
       const socketTask = wx.connectSocket({
-        url: 'wss://zzggdd.com/ws?role=driver&orderId=' + this.data.orderId + '&token=' + (wx.getStorageSync('token') || '')
+        url: 'wss://zzggdd.com/ws?role=driver&orderId=' + this.data.orderId
       });
 
       this.socketTask = socketTask;
 
       socketTask.onOpen(() => {
         console.log('司机 WebSocket 已连接');
+        socketTask.send({
+          data: JSON.stringify({ type: 'auth', token: wx.getStorageSync('token') || '' })
+        });
         this.setData({ socketReady: true });
         this.startReportLocation();
       });
