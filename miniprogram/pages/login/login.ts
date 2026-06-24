@@ -78,6 +78,46 @@ Page({
     });
   },
 
+  handleWxLogin() {
+    this.setData({ loading: true, errorMsg: '' });
+    wx.login({
+      success: (loginRes) => {
+        if (!loginRes.code) {
+          this.setData({ loading: false, errorMsg: '获取微信登录凭证失败' });
+          return;
+        }
+        request({
+          url: BASE_URL + '/api/auth/wx-login',
+          method: 'POST',
+          data: { code: loginRes.code },
+          success: (res: any) => {
+            this.setData({ loading: false });
+            if (res.statusCode !== 200 || !res.data) {
+              this.setData({ errorMsg: '微信登录服务异常，请稍后再试' });
+              return;
+            }
+            if (res.data.code === 200) {
+              wx.setStorageSync('token', res.data.data.token);
+              wx.setStorageSync('userInfo', res.data.data);
+              wx.showToast({ title: '登录成功', icon: 'success' });
+              setTimeout(() => {
+                wx.navigateTo({ url: '/pages/choose-role/choose-role' });
+              }, 1000);
+            } else {
+              this.setData({ errorMsg: res.data.msg || '微信登录失败' });
+            }
+          },
+          fail: () => {
+            this.setData({ loading: false, errorMsg: '网络连接失败，请检查网络后重试' });
+          }
+        });
+      },
+      fail: () => {
+        this.setData({ loading: false, errorMsg: '微信登录失败，请重试' });
+      }
+    });
+  },
+
   goRegister() { wx.navigateTo({ url: '/pages/register/register' }); },
   skipLogin() { wx.reLaunch({ url: '/pages/index/index' }); },
   goForgot() { wx.navigateTo({ url: '/pages/reset-password/reset-password' }); },

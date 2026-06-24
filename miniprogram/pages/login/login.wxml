@@ -33,8 +33,14 @@
       </view>
     </view>
 
+    <button class="wx-login-btn" bindtap="handleWxLogin" loading="{{loading}}" disabled="{{loading}}">
+      <text class="wx-icon">💬</text> 微信一键登录
+    </button>
+
+    <view class="divider"><view class="divider-line"></view><text class="divider-text">或</text><view class="divider-line"></view></view>
+
     <button class="login-btn" bindtap="handleLogin" loading="{{loading}}" disabled="{{loading}}">
-      {{loading ? '登录中...' : '登 录'}}
+      {{loading ? '登录中...' : '手机号登录'}}
     </button>
 
     <view class="alternative-actions">

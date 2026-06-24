@@ -123,6 +123,31 @@ page {
   white-space: nowrap;
 }
 
+/* 微信登录按钮 */
+.wx-login-btn {
+  width: 100%;
+  background: #07c160;
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: 700;
+  padding: 28rpx 0;
+  border-radius: 20rpx;
+  margin-top: 20rpx;
+  letter-spacing: 2rpx;
+  box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.3);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wx-login-btn[disabled] { opacity: 0.7; }
+.wx-icon { font-size: 36rpx; margin-right: 12rpx; }
+
+/* 分隔线 */
+.divider { display: flex; align-items: center; margin: 30rpx 0 10rpx; }
+.divider-line { flex: 1; height: 1rpx; background: #e8e8e8; }
+.divider-text { padding: 0 20rpx; font-size: 24rpx; color: #bbb; }
+
 /* 按钮 */
 .login-btn {
   width: 100%;
