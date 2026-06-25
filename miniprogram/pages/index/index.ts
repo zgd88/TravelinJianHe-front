@@ -207,6 +207,7 @@ Page({
     wx.navigateTo({ url: '/pages/search/search?type=pickup' });
   },
   goCarpool() {
+    if (this.data.hasActiveOrder) { wx.showToast({ title: '您有进行中的订单，请先完成', icon: 'none' }); return; }
     const center = this.getCenter();
     const { pickupAddr, destLatitude, destLongitude, destination } = this.data;
     if (!destLatitude || !destLongitude) { wx.showToast({ title: '请先选择目的地', icon: 'none' }); return; }
@@ -215,6 +216,7 @@ Page({
     });
   },
   goShare() {
+    if (this.data.hasActiveOrder) { wx.showToast({ title: '您有进行中的订单，请先完成', icon: 'none' }); return; }
     const center = this.getCenter();
     const { pickupAddr, destLatitude, destLongitude, destination } = this.data;
     if (!destLatitude || !destLongitude) { wx.showToast({ title: '请先选择目的地', icon: 'none' }); return; }
