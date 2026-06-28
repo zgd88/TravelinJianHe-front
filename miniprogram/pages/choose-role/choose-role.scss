@@ -1,25 +1,39 @@
+/* pages/choose-role/choose-role.scss */
 page { background: var(--color-bg); height: 100vh; }
-.page { display: flex; flex-direction: column; justify-content: center; padding: 0 50rpx; }
 
-.title { display: block; font-size: 48rpx; font-weight: var(--font-weight-bold); color: var(--color-text-primary); text-align: center; margin-bottom: 16rpx; }
-.subtitle { display: block; font-size: var(--font-size-md); color: var(--color-text-tertiary); text-align: center; margin-bottom: 80rpx; }
-
-.role-card {
-  display: flex; flex-direction: column; align-items: center; gap: var(--spacing-md);
-  border-radius: var(--radius-lg); padding: 60rpx 30rpx; margin-bottom: 30rpx;
-  border: 3rpx solid transparent; transition: transform 0.2s;
+.page {
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 0 48rpx; gap: 32rpx;
 }
-.role-card:active { transform: scale(0.97); }
+
+.subtitle {
+  font-size: var(--font-size-md); color: var(--color-text-secondary);
+  margin-bottom: 16rpx;
+}
+
+/* 角色卡片 — 原型风格 */
+.role-card {
+  width: 100%; border-radius: 24rpx; padding: 64rpx 32rpx;
+  display: flex; flex-direction: column; align-items: center; gap: 24rpx;
+  border: 3rpx solid transparent;
+}
 .role-card-passenger { background: var(--color-primary-light); border-color: var(--color-primary); }
 .role-card-driver { background: var(--color-driver-light); border-color: var(--color-driver); }
-.role-icon {
-  width: 120rpx; height: 120rpx; border-radius: 50%;
+
+.role-icon-wrap {
+  width: 128rpx; height: 128rpx; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
 }
-.role-card-passenger .role-icon { background: var(--color-primary); color: var(--color-text-white); }
-.role-card-driver .role-icon { background: var(--color-driver); color: var(--color-text-white); }
+.role-card-passenger .role-icon-wrap { background: var(--color-primary); }
+.role-card-driver .role-icon-wrap { background: var(--color-driver); }
 .role-emoji { font-size: 64rpx; }
-.role-name { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); }
-.role-card-passenger .role-name { color: var(--color-primary); }
-.role-card-driver .role-name { color: var(--color-driver); }
-.role-desc { font-size: var(--font-size-sm); color: var(--color-text-tertiary); }
+
+.role-title { font-size: 40rpx; font-weight: var(--font-weight-bold); }
+.role-card-passenger .role-title { color: var(--color-primary); }
+.role-card-driver .role-title { color: var(--color-driver); }
+
+.role-desc {
+  font-size: var(--font-size-sm); color: var(--color-text-secondary);
+  text-align: center;
+}

@@ -1,24 +1,21 @@
 <view class="page">
-  <view class="container">
-    <text class="title">选择身份</text>
-    <text class="subtitle">您想使用哪种服务？</text>
 
-    <view class="role-card" bindtap="choosePassenger">
-      <text class="role-emoji">🚗</text>
-      <view class="role-info">
-        <text class="role-name">我是乘客</text>
-        <text class="role-desc">叫车出行</text>
-      </view>
-      <text class="role-arrow">›</text>
-    </view>
+  <text class="subtitle">选择您的出行身份</text>
 
-    <view class="role-card" bindtap="chooseDriver">
-      <text class="role-emoji">🧑‍✈️</text>
-      <view class="role-info">
-        <text class="role-name">我是司机</text>
-        <text class="role-desc">接单赚钱</text>
-      </view>
-      <text class="role-arrow">›</text>
+  <view class="role-card role-card-passenger" bindtap="choosePassenger">
+    <view class="role-icon-wrap">
+      <text class="role-emoji">🧑</text>
     </view>
+    <text class="role-title">我要打车</text>
+    <text class="role-desc">作为乘客出行，快速呼叫车辆</text>
   </view>
+
+  <view class="role-card role-card-driver" bindtap="chooseDriver">
+    <view class="role-icon-wrap">
+      <text class="role-emoji">🚗</text>
+    </view>
+    <text class="role-title">我要接单</text>
+    <text class="role-desc">作为司机接单赚钱，需要先完成认证</text>
+  </view>
+
 </view>
