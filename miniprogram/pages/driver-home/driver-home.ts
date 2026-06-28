@@ -237,11 +237,14 @@ Page({
 
   startAutoRefresh() {
     this.stopAutoRefresh();
+    if (!this.data.isOnline) return;
     this.loadOrders();
     (this as any)._refreshTimer = setInterval(() => {
-      if (this.data.activeTab === 'pending') {
-        this.loadOrders();
-      }
+      if (!this.data.isOnline || this.data.activeTab !== 'pending') return;
+      // 检查页面是否已隐藏
+      const pages = getCurrentPages();
+      if (pages[pages.length - 1] !== this) return;
+      this.loadOrders();
     }, 10000);
   },
 
