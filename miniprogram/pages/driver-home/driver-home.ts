@@ -32,6 +32,7 @@ Page({
     if (typeof this.getTabBar === 'function') this.getTabBar().setData({ selected: 0 });
     this.checkVerification();
     this.loadTabData();
+    if (this.data.isOnline) this.startAutoRefresh();
   },
 
   onPullDownRefresh() {
@@ -220,6 +221,39 @@ Page({
 
   // ========== 在线/离线 ==========
   toggleOnline() {
-    this.setData({ isOnline: !this.data.isOnline });
+    const online = !this.data.isOnline;
+    this.setData({ isOnline: online });
+    if (online) {
+      this.startAutoRefresh();
+    } else {
+      this.stopAutoRefresh();
+    }
+  },
+
+  _refreshTimer: 0 as any,
+
+  startAutoRefresh() {
+    this.stopAutoRefresh();
+    this.loadOrders();
+    (this as any)._refreshTimer = setInterval(() => {
+      if (this.data.activeTab === 'pending') {
+        this.loadOrders();
+      }
+    }, 10000);
+  },
+
+  stopAutoRefresh() {
+    if ((this as any)._refreshTimer) {
+      clearInterval((this as any)._refreshTimer);
+      (this as any)._refreshTimer = 0;
+    }
+  },
+
+  onHide() {
+    this.stopAutoRefresh();
+  },
+
+  onUnload() {
+    this.stopAutoRefresh();
   },
 });
