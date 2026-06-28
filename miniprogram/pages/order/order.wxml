@@ -30,20 +30,16 @@
 
   <!-- ========== 订单信息卡片 ========== -->
   <view class="order-card">
-    <!-- 上车点 -->
-    <view class="route-line">
-      <view class="route-dot start-dot"></view>
-      <view class="route-dash"></view>
-      <view class="route-dot end-dot"></view>
-    </view>
-
-    <view class="route-info">
+    <view class="route-list">
       <view class="route-row">
-        <text class="route-label">上</text>
+        <view class="route-dot start-dot"></view>
         <text class="route-text">当前位置</text>
       </view>
+      <view class="route-line">
+        <view class="route-dash"></view>
+      </view>
       <view class="route-row">
-        <text class="route-label">下</text>
+        <view class="route-dot end-dot"></view>
         <text class="route-text">{{destination}}</text>
       </view>
     </view>

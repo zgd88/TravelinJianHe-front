@@ -29,18 +29,18 @@ page { background: var(--color-bg); height: 100vh; }
 /* 订单卡片 */
 .order-card { margin: 24rpx; background: var(--color-bg); border-radius: var(--radius-lg); padding: 30rpx; box-shadow: var(--shadow-sm); }
 
-/* 路线 */
-.route-info { position: relative; padding-left: 50rpx; margin-bottom: 30rpx; }
-.route-row { display: flex; align-items: center; margin-bottom: 20rpx; }
+/* 路线列表 */
+.route-list { }
+.route-row { display: flex; align-items: center; gap: 16rpx; }
+.route-line { display: flex; padding-left: 7rpx; }
 .route-dot { width: 16rpx; height: 16rpx; border-radius: 50%; flex-shrink: 0; }
 .start-dot { background: var(--color-primary); }
 .end-dot { background: var(--color-danger); }
 .route-dash {
-  width: 2rpx; flex: 1; min-height: 40rpx;
+  width: 2rpx; height: 36rpx;
   background: repeating-linear-gradient(to bottom, var(--color-border) 0rpx, var(--color-border) 6rpx, transparent 6rpx, transparent 12rpx);
-  margin: 6rpx 0;
+  margin-left: 0;
 }
-.route-label { width: 40rpx; height: 40rpx; border-radius: 8rpx; font-size: 22rpx; color: var(--color-text-tertiary); display: flex; align-items: center; justify-content: center; margin-right: 16rpx; flex-shrink: 0; }
 .route-text { font-size: var(--font-size-md); color: var(--color-text-primary); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
 
 /* 预估信息 */
