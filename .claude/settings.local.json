@@ -23,7 +23,16 @@
       "Bash(npm info *)",
       "Bash(node -e ' *)",
       "Bash(git checkout *)",
-      "Bash(git reset *)"
+      "Bash(git reset *)",
+      "Bash(where skillhub *)",
+      "Bash(skillhub list *)",
+      "Bash(skillhub uninstall *)",
+      "Bash(python3 .claude/skills/codegraph-1.0.0/scripts/analyze.py miniprogram --exclude node_modules)",
+      "Bash(python3 .claude/skills/codegraph-1.0.0/scripts/analyze.py miniprogram)",
+      "Bash(python .claude/skills/codegraph-1.0.0/scripts/analyze.py miniprogram)",
+      "Bash(python3 .claude/skills/codegraph-1.0.0/scripts/analyze.py miniprogram --query stats)",
+      "Bash(python3 .claude/skills/codegraph-1.0.0/scripts/analyze.py miniprogram --query functions)",
+      "Bash(python3 .claude/skills/codegraph-1.0.0/scripts/analyze.py miniprogram --query imports)"
     ]
   }
 }
