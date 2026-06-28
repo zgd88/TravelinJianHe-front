@@ -75,4 +75,3 @@ page { background: var(--color-bg); height: 100vh; }
 /* 底部链接 — 原型 btn-link 风格 */
 .bottom-links { display: flex; justify-content: space-between; margin-top: 40rpx; }
 .link { font-size: var(--font-size-sm); color: var(--color-text-tertiary); }
-.link.skip { font-weight: var(--font-weight-semibold); color: var(--color-primary); }

@@ -1,21 +1,6 @@
 <!--pages/register/register.wxml-->
 <view class="page">
 
-  <!-- 步骤指示器 -->
-  <view class="stepper">
-    <view class="step-item">
-      <view class="step-dot active">1</view>
-    </view>
-    <view class="step-line"></view>
-    <view class="step-item">
-      <view class="step-dot">2</view>
-    </view>
-    <view class="step-line"></view>
-    <view class="step-item">
-      <view class="step-dot">3</view>
-    </view>
-  </view>
-
   <!-- 错误提示 -->
   <view class="error-message" wx:if="{{errorMsg}}">
     <text>{{errorMsg}}</text>

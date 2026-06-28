@@ -3,18 +3,6 @@ page { background: var(--color-bg); height: 100vh; }
 
 .page { padding: 0 48rpx; }
 
-/* 步骤指示器 */
-.stepper { display: flex; align-items: center; justify-content: center; padding: 32rpx 0 48rpx; }
-.step-item { display: flex; align-items: center; }
-.step-dot {
-  width: 48rpx; height: 48rpx; border-radius: 50%;
-  background: var(--color-border); color: var(--color-text-tertiary);
-  font-size: var(--font-size-sm); font-weight: var(--font-weight-bold);
-  display: flex; align-items: center; justify-content: center;
-}
-.step-dot.active { background: var(--color-primary); color: var(--color-text-white); }
-.step-line { width: 60rpx; height: 2rpx; background: var(--color-border); margin: 0 8rpx; }
-
 /* 错误提示 */
 .error-message {
   background: #fff2f0; border-radius: 12rpx;

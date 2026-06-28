@@ -45,7 +45,7 @@
     <!-- 底部链接 -->
     <view class="bottom-links">
       <text class="link" bindtap="goRegister">注册新账号</text>
-      <text class="link skip" bindtap="skipLogin">跳过登录</text>
+      <text class="link" bindtap="goForgot">忘记密码？</text>
     </view>
 
   </view>
