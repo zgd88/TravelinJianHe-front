@@ -36,7 +36,10 @@ Page({
       this.setData({ showCallBtns: true });
     }
     this.checkActiveOrder();
-    if (typeof this.getTabBar === 'function') this.getTabBar().setData({ selected: 0 });
+    if (typeof this.getTabBar === 'function') {
+      this.getTabBar().refreshList();
+      this.getTabBar().setData({ selected: 0 });
+    }
   },
 
   // 检查是否有未完成订单

@@ -29,7 +29,10 @@ Page({
   },
 
   onShow() {
-    if (typeof this.getTabBar === 'function') this.getTabBar().setData({ selected: 0 });
+    if (typeof this.getTabBar === 'function') {
+      this.getTabBar().refreshList();
+      this.getTabBar().setData({ selected: 0 });
+    }
     this.checkVerification();
     this.loadTabData();
     if (this.data.isOnline) this.startAutoRefresh();

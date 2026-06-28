@@ -27,7 +27,10 @@ Page({
   },
 
   onShow() {
-    if (typeof this.getTabBar === 'function') this.getTabBar().setData({ selected: 1 });
+    if (typeof this.getTabBar === 'function') {
+      this.getTabBar().refreshList();
+      this.getTabBar().setData({ selected: 1 });
+    }
     this.loadUserInfo();
     this.loadStats();
   },
