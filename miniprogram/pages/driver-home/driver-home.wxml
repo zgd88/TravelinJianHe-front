@@ -74,10 +74,10 @@
     <!-- 我的订单 -->
     <scroll-view class="page-content" scroll-y wx:if="{{activeTab === 'mine'}}">
       <view class="sub-filter" wx:if="{{myOrders.length > 0}}">
-        <text class="sub-chip {{myFilter === 'all' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="all">全部</text>
-        <text class="sub-chip {{myFilter === 'accepted' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="accepted">已接单</text>
-        <text class="sub-chip {{myFilter === 'running' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="running">行程中</text>
-        <text class="sub-chip {{myFilter === 'completed' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="completed">已完成</text>
+        <view class="sub-chip {{myFilter === 'all' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="all">全部</view>
+        <view class="sub-chip {{myFilter === 'accepted' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="accepted">已接单</view>
+        <view class="sub-chip {{myFilter === 'running' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="running">行程中</view>
+        <view class="sub-chip {{myFilter === 'completed' ? 'active' : ''}}" bindtap="setMyFilter" data-filter="completed">已完成</view>
       </view>
       <view class="order-list" wx:if="{{filteredMyOrders.length > 0}}">
         <view class="order-card-item" wx:for="{{filteredMyOrders}}" wx:key="id" bindtap="goMyOrder" data-id="{{item.id}}">
