@@ -35,8 +35,8 @@
 
     <!-- 筛选栏 -->
     <view class="filter-bar">
-      <view class="filter-chip {{activeTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">全部</view>
-      <view class="filter-chip {{activeTab === 'mine' ? 'active' : ''}}" bindtap="switchTab" data-tab="mine">我的</view>
+      <view class="filter-chip {{activeTab === 'pending' ? 'active' : ''}}" bindtap="switchTab" data-tab="pending">附近订单</view>
+      <view class="filter-chip {{activeTab === 'mine' ? 'active' : ''}}" bindtap="switchTab" data-tab="mine">我的订单</view>
       <view class="filter-chip {{activeTab === 'carpool' ? 'active' : ''}}" bindtap="switchTab" data-tab="carpool">顺风车</view>
     </view>
 
