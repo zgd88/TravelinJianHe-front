@@ -1,190 +1,78 @@
 /* pages/login/login.scss */
-page {
-  background-color: #ffffff;
-  height: 100vh;
-}
+page { background: var(--color-bg); height: 100vh; }
 
 .page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 0 40rpx;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 100vh; padding: 0 var(--spacing-xl);
 }
 
 .login-container {
-  width: 100%;
-  background: #ffffff;
-  border-radius: 32rpx;
-  box-shadow: 0 8rpx 40rpx rgba(0, 0, 0, 0.05);
-  padding: 80rpx 50rpx 60rpx;
+  width: 100%; background: var(--color-bg);
+  border-radius: 32rpx; padding: 80rpx 50rpx 60rpx;
+  box-shadow: var(--shadow-sm);
 }
 
-/* 头部 */
-.login-header {
-  text-align: center;
-  margin-bottom: 70rpx;
-}
-
+/* 品牌区 */
+.brand-logo { display: flex; align-items: center; justify-content: center; gap: var(--spacing-md); padding-bottom: 64rpx; }
 .logo-icon {
-  width: 120rpx;
-  height: 120rpx;
-  background: linear-gradient(135deg, #2c2c2c, #2c2c2c);
-  border-radius: 30rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 30rpx;
-  box-shadow: 0 16rpx 32rpx rgba(255, 107, 0, 0.25);
+  width: 112rpx; height: 112rpx; border-radius: var(--radius-lg);
+  background: var(--color-primary); display: flex; align-items: center; justify-content: center;
 }
-
-.logo-emoji {
-  font-size: 64rpx;
-  line-height: 1;
-}
-
-.login-title {
-  display: block;
-  font-size: 44rpx;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 12rpx;
-}
-
-.login-subtitle {
-  display: block;
-  font-size: 26rpx;
-  color: #8c8c8c;
-  letter-spacing: 2rpx;
-}
+.logo-emoji { font-size: 64rpx; line-height: 1; }
+.logo-text { font-size: var(--font-size-2xl); font-weight: var(--font-weight-bold); color: var(--color-primary); }
 
 /* 错误提示 */
 .error-message {
-  background: #fff2f0;
-  border: 2rpx solid #ffccc7;
-  border-radius: 12rpx;
-  padding: 16rpx 24rpx;
-  color: #ff4d4f;
-  font-size: 26rpx;
-  margin-bottom: 30rpx;
-  display: flex;
-  align-items: center;
+  background: #fff2f0; border: 2rpx solid #ffccc7;
+  border-radius: var(--radius-sm); padding: 16rpx 24rpx;
+  color: var(--color-danger); font-size: var(--font-size-sm);
+  margin-bottom: 30rpx; display: flex; align-items: center;
 }
-
-.error-icon {
-  margin-right: 12rpx;
-  font-size: 28rpx;
-}
+.error-icon { margin-right: 12rpx; font-size: 28rpx; }
 
 /* 输入组 */
-.input-group {
-  margin-bottom: 35rpx;
-}
-
-.input-label {
-  font-size: 26rpx;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 12rpx;
-  display: block;
-}
-
+.input-group { margin-bottom: 35rpx; }
+.input-label { font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); margin-bottom: 12rpx; display: block; }
 .input-wrapper {
-  display: flex;
-  align-items: center;
-  background: #f8f9fb;
-  border: 2rpx solid #eaedf2;
-  border-radius: 20rpx;
-  padding: 0 24rpx;
+  display: flex; align-items: center; background: var(--color-card);
+  border: 2rpx solid var(--color-border); border-radius: var(--radius-md);
+  padding: 0 24rpx; transition: border-color 0.2s;
 }
-
-.input-wrapper:focus-within {
-  border-color: #2c2c2c;
-  background: #ffffff;
-}
-
-.input-icon-emoji {
-  font-size: 36rpx;
-  margin-right: 16rpx;
-  line-height: 1;
-}
-
-.input-field {
-  flex: 1;
-  padding: 28rpx 0;
-  font-size: 30rpx;
-  color: #1a1a1a;
-}
-
-.toggle-pwd {
-  font-size: 24rpx;
-  color: #2c2c2c;
-  padding: 10rpx 0 10rpx 10rpx;
-  white-space: nowrap;
-}
+.input-wrapper:focus-within { border-color: var(--color-primary); background: var(--color-bg); }
+.input-icon-emoji { font-size: 36rpx; margin-right: 16rpx; }
+.input-field { flex: 1; padding: 28rpx 0; font-size: var(--font-size-md); color: var(--color-text-primary); }
+.toggle-pwd { font-size: 24rpx; color: var(--color-text-tertiary); padding: 10rpx; }
+.clear-btn { font-size: 24rpx; color: var(--color-text-tertiary); padding: 10rpx; }
 
 /* 微信登录按钮 */
 .wx-login-btn {
-  width: 100%;
-  background: #07c160;
-  color: #ffffff;
-  font-size: 32rpx;
-  font-weight: 700;
-  padding: 28rpx 0;
-  border-radius: 20rpx;
-  margin-top: 20rpx;
-  letter-spacing: 2rpx;
-  box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.3);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%; height: 96rpx; background: var(--color-success);
+  color: var(--color-text-white); font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold); padding: 0;
+  border-radius: var(--radius-md); margin-top: var(--spacing-xl);
+  box-shadow: 0 8rpx 24rpx rgba(0,184,77,0.25);
+  border: none; display: flex; align-items: center; justify-content: center;
 }
 .wx-login-btn[disabled] { opacity: 0.7; }
 .wx-icon { font-size: 36rpx; margin-right: 12rpx; }
 
 /* 分隔线 */
 .divider { display: flex; align-items: center; margin: 30rpx 0 10rpx; }
-.divider-line { flex: 1; height: 1rpx; background: #e8e8e8; }
-.divider-text { padding: 0 20rpx; font-size: 24rpx; color: #bbb; }
+.divider-line { flex: 1; height: 1rpx; background: var(--color-divider); }
+.divider-text { padding: 0 20rpx; font-size: 24rpx; color: var(--color-text-tertiary); }
 
-/* 按钮 */
+/* 手机号登录按钮 */
 .login-btn {
-  width: 100%;
-  background: linear-gradient(135deg, #2c2c2c, #2c2c2c);
-  color: #ffffff;
-  font-size: 32rpx;
-  font-weight: 700;
-  padding: 28rpx 0;
-  border-radius: 20rpx;
-  margin-top: 20rpx;
-  letter-spacing: 4rpx;
-  box-shadow: 0 12rpx 28rpx rgba(255, 107, 0, 0.25);
-  border: none;
+  width: 100%; height: 96rpx; background: var(--color-primary);
+  color: var(--color-text-white); font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold); padding: 0;
+  border-radius: var(--radius-md); margin-top: var(--spacing-xl);
+  box-shadow: 0 8rpx 24rpx rgba(26,115,232,0.25); border: none;
 }
-
-.login-btn[disabled] {
-  opacity: 0.7;
-}
+.login-btn[disabled] { opacity: 0.7; }
 
 /* 底部操作 */
-.alternative-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 50rpx;
-}
-
-.link {
-  font-size: 26rpx;
-  color: #2c2c2c;
-  font-weight: 600;
-}
-.skip-area {
-  text-align: center;
-  margin-top: 40rpx;
-}
-
-.skip-text {
-  font-size: 26rpx;
-  color: #8c8c8c;
-}
+.alternative-actions { display: flex; justify-content: space-between; margin-top: 50rpx; }
+.link { font-size: var(--font-size-sm); color: var(--color-text-tertiary); font-weight: var(--font-weight-medium); }
+.skip-area { text-align: center; margin-top: 40rpx; }
+.skip-text { font-size: var(--font-size-sm); color: var(--color-text-tertiary); }

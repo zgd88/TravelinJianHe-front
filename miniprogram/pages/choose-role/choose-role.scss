@@ -1,58 +1,25 @@
-page {
-  background: #ffffff;
-  height: 100vh;
-}
-.page {
-  display: flex;
-  justify-content: center;
-  padding-top: 200rpx;
-}
-.container {
-  width: 100%;
-  padding: 0 50rpx;
-}
-.title {
-  display: block;
-  font-size: 48rpx;
-  font-weight: 700;
-  color: #1a1a1a;
-  text-align: center;
-  margin-bottom: 16rpx;
-}
-.subtitle {
-  display: block;
-  font-size: 28rpx;
-  color: #8c8c8c;
-  text-align: center;
-  margin-bottom: 80rpx;
-}
+page { background: var(--color-bg); height: 100vh; }
+.page { display: flex; flex-direction: column; justify-content: center; padding: 0 50rpx; }
+
+.title { display: block; font-size: 48rpx; font-weight: var(--font-weight-bold); color: var(--color-text-primary); text-align: center; margin-bottom: 16rpx; }
+.subtitle { display: block; font-size: var(--font-size-md); color: var(--color-text-tertiary); text-align: center; margin-bottom: 80rpx; }
+
 .role-card {
-  display: flex;
-  align-items: center;
-  background: #ffffff;
-  border-radius: 24rpx;
-  padding: 40rpx 30rpx;
-  margin-bottom: 30rpx;
-  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.04);
+  display: flex; flex-direction: column; align-items: center; gap: var(--spacing-md);
+  border-radius: var(--radius-lg); padding: 60rpx 30rpx; margin-bottom: 30rpx;
+  border: 3rpx solid transparent; transition: transform 0.2s;
 }
-.role-emoji {
-  font-size: 60rpx;
-  margin-right: 24rpx;
+.role-card:active { transform: scale(0.97); }
+.role-card-passenger { background: var(--color-primary-light); border-color: var(--color-primary); }
+.role-card-driver { background: var(--color-driver-light); border-color: var(--color-driver); }
+.role-icon {
+  width: 120rpx; height: 120rpx; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
 }
-.role-info {
-  flex: 1;
-}
-.role-name {
-  font-size: 34rpx;
-  font-weight: 700;
-  color: #1a1a1a;
-  display: block;
-}
-.role-desc {
-  font-size: 26rpx;
-  color: #8c8c8c;
-}
-.role-arrow {
-  font-size: 48rpx;
-  color: #ccc;
-}
+.role-card-passenger .role-icon { background: var(--color-primary); color: var(--color-text-white); }
+.role-card-driver .role-icon { background: var(--color-driver); color: var(--color-text-white); }
+.role-emoji { font-size: 64rpx; }
+.role-name { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); }
+.role-card-passenger .role-name { color: var(--color-primary); }
+.role-card-driver .role-name { color: var(--color-driver); }
+.role-desc { font-size: var(--font-size-sm); color: var(--color-text-tertiary); }
