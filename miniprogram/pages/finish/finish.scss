@@ -1,209 +1,57 @@
 /* pages/finish/finish.scss */
-page {
-  background: #ffffff;
-}
+page { background: var(--color-bg); }
+.page { min-height: 100vh; padding-bottom: 40rpx; }
 
-.page {
-  min-height: 100vh;
-  padding-bottom: 40rpx;
-}
-
-/* 地图区域 */
-.map-area {
-  height: 380rpx;
-  overflow: hidden;
-}
-.route-map {
-  width: 100%; height: 100%;
-}
+/* 地图 */
+.map-area { height: 380rpx; overflow: hidden; }
+.route-map { width: 100%; height: 100%; }
 
 /* 完成状态 */
-.finish-status {
-  text-align: center;
-  padding: 40rpx 0 30rpx;
-  background: #ffffff;
-}
+.finish-status { text-align: center; padding: 40rpx 0 30rpx; background: var(--color-bg); }
+.finish-emoji { font-size: 80rpx; display: block; margin-bottom: 12rpx; }
+.finish-title { font-size: 40rpx; font-weight: var(--font-weight-bold); color: var(--color-text-primary); display: block; margin-bottom: 6rpx; }
+.finish-subtitle { font-size: var(--font-size-sm); color: var(--color-text-tertiary); }
 
-.finish-emoji {
-  font-size: 80rpx;
-  display: block;
-  margin-bottom: 12rpx;
-}
+/* 费用卡片 — 原型 price-display + fee-list */
+.price-card { background: var(--color-bg); margin: 24rpx; border-radius: var(--radius-lg); padding: 40rpx 30rpx; text-align: center; box-shadow: var(--shadow-sm); }
+.price-label { font-size: var(--font-size-sm); color: var(--color-text-tertiary); display: block; margin-bottom: 16rpx; }
+.price-row { display: flex; align-items: baseline; justify-content: center; margin-bottom: 30rpx; }
+.price-symbol { font-size: 36rpx; color: var(--color-text-primary); font-weight: var(--font-weight-bold); margin-right: 4rpx; }
+.price-value { font-size: 72rpx; color: var(--color-text-primary); font-weight: var(--font-weight-bold); line-height: 1; }
+.price-detail { border-top: 1px solid var(--color-divider); padding-top: 24rpx; }
+.detail-row { display: flex; justify-content: space-between; padding: 12rpx 0; }
+.detail-label { font-size: var(--font-size-sm); color: var(--color-text-tertiary); }
+.detail-value { font-size: var(--font-size-sm); color: var(--color-text-primary); font-weight: var(--font-weight-medium); }
 
-.finish-title {
-  font-size: 40rpx;
-  font-weight: 700;
-  color: #1a1a1a;
-  display: block;
-  margin-bottom: 6rpx;
-}
-
-.finish-subtitle {
-  font-size: 26rpx;
-  color: #8c8c8c;
-}
-
-/* 费用卡片 */
-.price-card {
-  background: #ffffff;
-  margin: 24rpx;
-  border-radius: 24rpx;
-  padding: 40rpx 30rpx;
-  text-align: center;
-}
-
-.price-label {
-  font-size: 26rpx;
-  color: #8c8c8c;
-  display: block;
-  margin-bottom: 16rpx;
-}
-
-.price-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  margin-bottom: 30rpx;
-}
-
-.price-symbol {
-  font-size: 36rpx;
-  color: #2c2c2c;
-  font-weight: 700;
-  margin-right: 4rpx;
-}
-
-.price-value {
-  font-size: 72rpx;
-  color: #2c2c2c;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.price-detail {
-  border-top: 1rpx solid #f0f0f0;
-  padding-top: 24rpx;
-}
-
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 12rpx 0;
-}
-
-.detail-label {
-  font-size: 26rpx;
-  color: #8c8c8c;
-}
-
-.detail-value {
-  font-size: 26rpx;
-  color: #333;
-  font-weight: 500;
-}
-
-/* 评价 */
-.rating-section {
-  background: #ffffff;
-  margin: 0 24rpx 24rpx;
-  border-radius: 24rpx;
-  padding: 30rpx;
-  text-align: center;
-}
-
-.rating-title {
-  font-size: 28rpx;
-  color: #333;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 20rpx;
-}
-
-.stars-row {
-  display: flex;
-  justify-content: center;
-  gap: 16rpx;
-}
-
-.star {
-  font-size: 60rpx;
-  color: #e0e0e0;
-  transition: color 0.2s;
-}
-
-.star-active {
-  color: #ffb800;
-}
-
-/* 按钮 */
-.actions {
-  padding: 0 24rpx;
-  display: flex;
-  flex-direction: column;
-  gap: 16rpx;
-}
-
-.btn-primary {
-  width: 100%;
-  background: linear-gradient(135deg, #2c2c2c, #2c2c2c);
-  color: #ffffff;
-  font-size: 32rpx;
-  font-weight: 700;
-  padding: 28rpx 0;
-  border-radius: 20rpx;
-  border: none;
-}
-
-.btn-secondary {
-  width: 100%;
-  background: #f5f5f5;
-  color: #666;
-  font-size: 28rpx;
-  padding: 26rpx 0;
-  border-radius: 20rpx;
-  border: none;
-}
-
-/* 加载 */
-.loading-mask {
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.3);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  z-index: 999;
-}
-.loading-spinner {
-  width: 60rpx; height: 60rpx;
-  border: 5rpx solid rgba(255,255,255,0.3);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text { font-size: 26rpx; color: #fff; margin-top: 16rpx; }
+/* 评价 — 原型 star-rating */
+.rating-section { background: var(--color-bg); margin: 0 24rpx 24rpx; border-radius: var(--radius-lg); padding: 30rpx; text-align: center; box-shadow: var(--shadow-sm); }
+.rating-title { font-size: var(--font-size-md); color: var(--color-text-primary); font-weight: var(--font-weight-semibold); display: block; margin-bottom: 20rpx; }
+.stars-row { display: flex; justify-content: center; gap: 16rpx; }
+.star { font-size: 60rpx; color: var(--color-border); }
+.star-active { color: #ffb800; }
 
 /* 司机卡片 */
-.driver-card {
-  background: #fff; margin: 0 24rpx 24rpx;
-  border-radius: 20rpx; padding: 24rpx;
-  display: flex; align-items: center;
-}
-.driver-avatar {
-  width: 72rpx; height: 72rpx; background: #f5f5f5;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  margin-right: 16rpx;
-}
+.driver-card { background: var(--color-bg); margin: 0 24rpx 24rpx; border-radius: var(--radius-lg); padding: 24rpx; display: flex; align-items: center; box-shadow: var(--shadow-sm); }
+.driver-avatar { width: 72rpx; height: 72rpx; background: var(--color-card); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 16rpx; }
 .avatar-emoji { font-size: 40rpx; }
 .driver-info { flex: 1; }
-.driver-name { font-size: 30rpx; font-weight: 700; color: #1a1a1a; display: block; }
-.car-desc { font-size: 24rpx; color: #999; margin-top: 4rpx; display: block; }
+.driver-name { font-size: var(--font-size-md); font-weight: var(--font-weight-bold); color: var(--color-text-primary); display: block; }
+.car-desc { font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-top: 4rpx; display: block; }
 
 /* 评价按钮 */
-.rating-btn {
-  margin-top: 24rpx;
-  width: 100%;
-  background: linear-gradient(135deg, #ffb800, #ff9500);
-  color: #fff; font-size: 28rpx; font-weight: 600;
-  padding: 20rpx 0; border-radius: 14rpx; border: none;
-}
+.rating-btn { margin-top: 24rpx; width: 100%; background: linear-gradient(135deg, #ffb800, var(--color-warning)); color: var(--color-text-white); font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); padding: 20rpx 0; border-radius: var(--radius-md); border: none; }
 .rating-btn::after { border: none; }
-.rated-hint { font-size: 24rpx; color: #999; margin-top: 16rpx; display: block; }
+.rated-hint { font-size: var(--font-size-sm); color: var(--color-text-tertiary); margin-top: 16rpx; display: block; }
+
+/* 操作按钮 — 原型 */
+.actions { padding: 0 24rpx; display: flex; flex-direction: column; gap: 16rpx; }
+.btn-primary { width: 100%; background: var(--color-primary); color: var(--color-text-white); font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); padding: 28rpx 0; border-radius: var(--radius-md); border: none; }
+.btn-primary::after { border: none; }
+.btn-secondary { width: 100%; background: var(--color-card); color: var(--color-text-secondary); font-size: var(--font-size-md); padding: 26rpx 0; border-radius: var(--radius-md); border: none; }
+.btn-secondary::after { border: none; }
+
+/* 加载 */
+.loading-mask { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; }
+.loading-spinner { width: 60rpx; height: 60rpx; border: 5rpx solid rgba(255,255,255,0.3); border-top-color: var(--color-text-white); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: var(--font-size-sm); color: var(--color-text-white); margin-top: 16rpx; }
