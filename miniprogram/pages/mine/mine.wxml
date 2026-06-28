@@ -12,7 +12,7 @@
       <text class="user-phone">{{maskedPhone || '未绑定手机号'}}</text>
       <view class="role-badge-d">
         <text class="role-badge-text">{{roleText}}</text>
-        <text class="role-switch-link" bindtap="switchRole">切换为{{role === 'driver' ? '乘客' : '司机'}}</text>
+        <text class="role-switch-link" catchtap="switchRole">切换为{{role === 'driver' ? '乘客' : '司机'}}</text>
       </view>
     </view>
   </view>
