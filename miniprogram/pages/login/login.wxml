@@ -1,51 +1,52 @@
 <!--pages/login/login.wxml-->
 <view class="page">
   <view class="login-container">
-    <view class="login-header">
-      <view class="logo-icon"><text class="logo-emoji">🚗</text></view>
-      <text class="login-title">欢迎回来</text>
-      <text class="login-subtitle">登录你的出行账户</text>
+
+    <!-- 品牌区: Logo + 名称 -->
+    <view class="brand-logo">
+      <view class="logo-icon">
+        <text class="logo-emoji">🚗</text>
+      </view>
+      <text class="logo-text">RideGo</text>
     </view>
 
+    <!-- 错误提示 -->
     <view class="error-message" wx:if="{{errorMsg}}">
-      <text class="error-icon">⚠️</text>
       <text>{{errorMsg}}</text>
     </view>
 
+    <!-- 手机号 -->
     <view class="input-group">
-      <text class="input-label">手机号码</text>
-      <view class="input-wrapper {{phoneFocused ? 'input-focused' : ''}}">
-        <text class="input-icon-emoji">📱</text>
-        <input class="input-field" type="number" placeholder="请输入手机号" maxlength="11"
-          value="{{phone}}" bindinput="onPhoneInput" bindfocus="onPhoneFocus" bindblur="onPhoneBlur"/>
-        <text class="clear-btn" wx:if="{{phone.length > 0}}" bindtap="clearPhone">✕</text>
-      </view>
+      <text class="input-label">手机号</text>
+      <input class="input-field" type="number" placeholder="请输入手机号" maxlength="11"
+        value="{{phone}}" bindinput="onPhoneInput"/>
     </view>
 
+    <!-- 密码 -->
     <view class="input-group">
       <text class="input-label">密码</text>
-      <view class="input-wrapper {{passwordFocused ? 'input-focused' : ''}}">
-        <text class="input-icon-emoji">🔒</text>
-        <input class="input-field" type="{{showPassword ? 'text' : 'password'}}" password="{{!showPassword}}"
-          placeholder="请输入密码（6-20位）" maxlength="20"
-          value="{{password}}" bindinput="onPasswordInput" bindfocus="onPasswordFocus" bindblur="onPasswordBlur"/>
-        <text class="toggle-pwd" bindtap="togglePassword">{{showPassword ? '🙈' : '👁'}}</text>
-      </view>
+      <input class="input-field" type="{{showPassword ? 'text' : 'password'}}" password="{{!showPassword}}"
+        placeholder="请输入密码" maxlength="20"
+        value="{{password}}" bindinput="onPasswordInput"/>
     </view>
 
-    <button class="wx-login-btn" bindtap="handleWxLogin" loading="{{loading}}" disabled="{{loading}}">
-      <text class="wx-icon">💬</text> 微信一键登录
+    <!-- 微信登录 -->
+    <button class="btn btn-wx" bindtap="handleWxLogin" loading="{{loading}}" disabled="{{loading}}">
+      微信一键登录
     </button>
 
     <view class="divider"><view class="divider-line"></view><text class="divider-text">或</text><view class="divider-line"></view></view>
 
-    <button class="login-btn" bindtap="handleLogin" loading="{{loading}}" disabled="{{loading}}">
-      {{loading ? '登录中...' : '手机号登录'}}
+    <!-- 手机号登录 -->
+    <button class="btn btn-primary" bindtap="handleLogin" loading="{{loading}}" disabled="{{loading}}">
+      {{loading ? '登录中...' : '登录'}}
     </button>
 
-    <view class="alternative-actions">
-      <text class="link" bindtap="goRegister">📝 注册新账号</text>
-      <text class="link" bindtap="goForgot">❓ 忘记密码？</text>
+    <!-- 底部链接 -->
+    <view class="bottom-links">
+      <text class="link" bindtap="goRegister">注册新账号</text>
+      <text class="link skip" bindtap="skipLogin">跳过登录</text>
     </view>
+
   </view>
 </view>
